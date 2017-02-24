@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>MovieWiki</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-4">
+    <div class="jumbotron">
+    <h1 class="display-5 text-center">Add Movie</h1>
+    <br/>
+    <form name="movieAdder">
+      <div class="form-group row">
+        <label for="title" class="col-2 form-control-label">Title</label>
+        <div class="col-10">
+          <input type="text" required class="form-control" name="title" placeholder="Add title..." />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="year" class="col-2 form-control-label">Year</label>
+        <div class="col-10">
+          <input type="text" required class="form-control" name="year" placeholder="Add year..." />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="genres" class="col-2 form-control-label">Genre</label>
+        <div class="col-10">
+          <input type="text" class="form-control" name="genres" placeholder="Add genre..." />
+        </div>
+      </div>
+        <button onclick="MovieWiki.methods.addMovie()" id="movie-creator" class="btn btn-primary btn-block">Submit</button>
+    </form>
+  </div>
+
+    <div class="jumbotron">
+      <h1 class="display-5 text-center">Filter Movies</h1>
+          <select class="custom-select" id="selected-movie-question" onchange="getSelected()">
+            <option>All</option>
+            <option>By Year</option>
+            <option>By Genre</option>
+            <option>Best Movie</option>
+            <option>Worst Movie</option>
+          </select>
+          <div class="form-group">
+            <form name="movieYearInput">
+
+            </form>
+          </div>
+    <br />
+    <div id="movie-result">
+
+    </div>
+</div>
+</div>
+
+
+<div class="col-8">
+  <table class="table table-striped table-hover table-hover-blue">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Title<button class="btn-empty dropdown-toggle" id="title-sort"></button></th>
+      <th>Year
+      <input type="checkbox" id="year-sort"/>
+      <label for="year-sort"><span class="btn-empty dropdown-toggle"></span></label>
+      </th>
+      <th>Genre</th>
+      <th>Rating
+        <input type="checkbox" id="rating-sort"/>
+        <label for="rating-sort"><span class="btn-empty dropdown-toggle"></span></label>
+      </th>
+    </tr>
+  </thead>
+  <tbody id="movie-table">
+  </tbody>
+</table>
+
+</div>
+    </div>
+  </div>
+
+<div class="overlay is-hidden" id="overlay">
+    <!-- <div class="modal-content">
+      <div class="modal-header">
+        <h5 id="modal-movie-title"></h5>
+        <button type="button" class="close" onclick="closeModal();">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p id="modal-movie-year">Year: </p>
+  			<p id="modal-movie-genres">Genres: </p>
+  			<p id="modal-movie-ratings">Rating: </p>
+        <img id="modal-movie-poster" alt="Movie Poster">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeModal();">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+
+
+	</div> -->
+</div>
+
+<!-- <div class="center">
+	<h1 class="page-title">Modal Wihout jQuery</h1>
+	<p><a class="button button-primary" onclick="openModal();" href="#">Open modal</a></p>
+</div> -->
+
+
+<script src="js/movies.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
