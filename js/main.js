@@ -11,7 +11,7 @@ window.onload = function () {
   MovieWiki.methods.createMovieList();
 };
 
-const MovieWiki = {
+var MovieWiki = {
     elements: {
       movieTable : document.getElementById('movie-table'),
       titleSort : document.getElementById('title-sort'),
@@ -29,13 +29,15 @@ const MovieWiki = {
       overlay : document.getElementById('overlay'),
       selectedMovieQuestion : document.getElementById("selected-movie-question"),
       movieYearInput : document.forms.movieYearInput,
-      sendMovieYear: document.getElementById("send-movie-year")
+      movieGenreInput : document.forms.movieGenreInput,
+      genreInput : document.forms.editGenre.genre
   },
   constructor: {
     Movie: function (title, year, genres) {
       this.title = title;
       this.year = year;
       this.genres = genres;
+      this.ratings = [];
       }
   },
   methods: {
@@ -43,8 +45,8 @@ const MovieWiki = {
           MovieWiki.elements.movieTable.innerHTML = '';
           for (let i = 0; i < MovieWiki.elements.movieList.length; i++){
             MovieWiki.elements.movieTable.innerHTML +=
-            `<tr class=modal-opener data-toggle=modal data-id=${i + 1} data-target=#movie-modal onclick=MovieWiki.methods.openModal(${i})>
-                <th scope=row>${i + 1}</th>
+            `<tr class="modal-opener" data-toggle="modal" data-id="${i + 1}" data-target="#movie-modal" onclick="MovieWiki.methods.openModal(${i})"">
+                <th scope="row">${i + 1}</th>
                 <td>${MovieWiki.elements.movieList[i].title}</td>
                 <td>${MovieWiki.elements.movieList[i].year}</td>
                 <td>${MovieWiki.elements.movieList[i].genres}</td>
@@ -54,15 +56,12 @@ const MovieWiki = {
         }
       },
       openModal : function (index) {
-        MovieWiki.elements.overlay.classList.remove('is-hidden');
         MovieWiki.elements.modalTitle.innerHTML = MovieWiki.elements.movieList[index].title;
         MovieWiki.elements.modalYear.innerHTML = MovieWiki.elements.movieList[index].year;
         MovieWiki.elements.modalGenres.innerHTML = MovieWiki.elements.movieList[index].genres;
         MovieWiki.elements.modalRating.innerHTML = MovieWiki.methods.getAverage(MovieWiki.elements.movieList[index].ratings);
         MovieWiki.elements.modalPoster.src = MovieWiki.elements.movieList[index].image;
-      },
-      closeModal : function () {
-        MovieWiki.elements.overlay.classList.add('is-hidden');
+        MovieWiki.elements.genreInput.value = MovieWiki.elements.movieList[index].genres;
       },
       addMovie : function () {
         const movieTitle = document.forms.movieAdder.title.value;
@@ -73,17 +72,40 @@ const MovieWiki = {
         localStorage.setItem("Movies", JSON.stringify(MovieWiki.elements.movieList));
         this.createMovieList();
       },
-      rateMovie : function (movie, rating) {
-        MovieWiki.elements.selectedRating.classList.remove('invisible');
+      rateMovie : function () {
+        for (let i = 0; i < MovieWiki.elements.movieList.length; i++ ) {
+          if (MovieWiki.elements.modalTitle.innerHTML === MovieWiki.elements.movieList[i].title) {
+            MovieWiki.elements.movieList[i].ratings.push(parseInt(MovieWiki.elements.selectedRating.value));
+            this.openModal(i);
+            this.createMovieList();
+          }
+        }
+      },
+      editGenre : function () {
+        for (let i = 0; i < MovieWiki.elements.movieList.length; i++ ) {
+          if (MovieWiki.elements.modalTitle.innerHTML === MovieWiki.elements.movieList[i].title) {
+            MovieWiki.elements.movieList[i].genres = MovieWiki.elements.genreInput.value.split(',');
+          }
+
+        }
       },
       getSelected : function () {
         if (MovieWiki.elements.selectedMovieQuestion.selectedIndex !== 1) {
               MovieWiki.elements.movieYearInput.classList.add('invisible');
         }
+        if (MovieWiki.elements.selectedMovieQuestion.selectedIndex !== 2) {
+              MovieWiki.elements.movieGenreInput.classList.add('invisible');
+        }
         if (MovieWiki.elements.selectedMovieQuestion.selectedIndex === 1) {
               MovieWiki.elements.movieYearInput.classList.remove('invisible');
               MovieWiki.elements.movieYearInput.year.addEventListener("keyup", function () {
               MovieWiki.methods.getMoviesThisYear(this.value);
+          });
+        }
+        else if (MovieWiki.elements.selectedMovieQuestion.selectedIndex === 2) {
+              MovieWiki.elements.movieGenreInput.classList.remove('invisible');
+              MovieWiki.elements.movieGenreInput.genre.addEventListener("keyup", function () {
+              MovieWiki.methods.getMoviesByGenre(this.value);
           });
         }
         else if (MovieWiki.elements.selectedMovieQuestion.selectedIndex === 3) {
@@ -98,10 +120,15 @@ const MovieWiki = {
       },
       getAverage : function (arr) {
         let sum = 0;
+        if (arr.length !== 0) {
         for (let i = 0; i < arr.length; i++) {
           sum+= arr[i];
         }
         return (sum/arr.length).toFixed(1);
+        }
+        else {
+          return 'N/A';
+        }
 
       },
       getTopRatedMovie : function () {
@@ -126,8 +153,6 @@ const MovieWiki = {
         const worstRated = MovieWiki.elements.movieList.reduce(
           (prevVal, currVal) => MovieWiki.methods.getAverage(prevVal.ratings) < MovieWiki.methods.getAverage(currVal.ratings) ? prevVal : currVal
         );
-        let test = () => this;
-        console.log(this);
         for (let i = 0; i < MovieWiki.elements.movieList.length; i++){
           if (MovieWiki.elements.movieList[i] === worstRated) {
         MovieWiki.elements.movieTable.innerHTML =
@@ -162,40 +187,39 @@ const MovieWiki = {
           }
       },
       getMoviesByGenre : function (...movieGenre) {
-        let genreArr = movieGenre.sort();
-        let filteredArr = MovieWiki.elements.movieList.filter(movie => movie.genres.sort());
-        let finalArr = [];
-        for(var i = 0; i < genreArr.length; i++){
-          for (let j = 0; j < filteredArr.length; j++) {
-             if(filteredArr[j].genres.indexOf(genreArr[i]) > -1)
-             console.log(filteredArr[j]);
-           }
+        MovieWiki.elements.movieTable.innerHTML = '';
+        for (let i = 0; i < movieGenre.length; i++) {
+          for (let j = 0; j < MovieWiki.elements.movieList.length; j++) {
+              if (MovieWiki.elements.movieList[j].genres.indexOf(movieGenre[i]) !== -1) {
+                MovieWiki.elements.movieTable.innerHTML +=
+                `<tr class=modal-opener data-toggle=modal data-id=${j + 1} onclick=MovieWiki.methods.openModal(${j})>
+                        <th scope=row>${1 + j}</th>
+                        <td>${MovieWiki.elements.movieList[j].title}</td>
+                        <td>${MovieWiki.elements.movieList[j].year}</td>
+                        <td>${MovieWiki.elements.movieList[j].genres}</td>
+                        <td>${MovieWiki.methods.getAverage(MovieWiki.elements.movieList[j].ratings)}</td>
+                    </tr>`
+                    ;
+              }
+          }
+
         }
-        return true;
-        // let yearArr = MovieList.filter(movie => movie.genres.indexOf(movieGenre.forEach(genre => genre > -1)));
-        // for (let j = 0; j < yearArr.length -1; j++) {
-        //   for (let i = 0; i < MovieWiki.elements.movieList.length -1; i++) {
-        //     if(yearArr[j] === MovieList[i]) {
-        //       MovieWiki.elements.movieTable.innerHTML +=
-        //       `<tr class=modal-opener data-toggle=modal data-id=${i + 1} data-target=#movie-modal onclick=openModal(${i})>
-        //               <th scope=row>${1 + j}</th>
-        //               <td>${MovieList[i].title}</td>
-        //               <td>${MovieList[i].year}</td>
-        //               <td>${MovieList[i].genres}</td>
-        //               <td>${MovieWiki.methods.getAverage(MovieList[i].ratings)}</td>
-        //           </tr>`
-        //         ;
-        //       }
-        //     }
-        //   }
+        // let filteredArr = MovieWiki.elements.movieList.filter(movie => movie.genres.sort());
+        // let finalArr = [];
+        // for(var i = 0; i < genreArr.length; i++){
+        //   for (let j = 0; j < filteredArr.length; j++) {
+        //      if(filteredArr[j].genres.indexOf(genreArr[i]) > -1)
+        //      console.log(filteredArr[j]);
+        //    }
+        // }
       },
-      sortMovies : function (prop) {
+      sortMovies : function (year) {
         var movieArr = [];
-        if (Movies[0].prop > Movies[1].prop) {
-          movieArr = Movies.sort((a, b) => a.prop - b.prop);
+        if (MovieWiki.elements.movieList[0].year > MovieWiki.elements.movieList[1].year) {
+          movieArr = MovieWiki.elements.movieList.sort((a, b) => a.year - b.year);
         }
         else {
-          movieArr = Movies.sort((a, b) => b.prop - a.prop);
+          movieArr = MovieWiki.elements.movieList.sort((a, b) => b.year - a.year);
         }
         MovieWiki.elements.movieTable.innerHTML = '';
         for (let i = 0; i < movieArr.length; i++){
@@ -205,76 +229,10 @@ const MovieWiki = {
               <td>${movieArr[i].title}</td>
               <td>${movieArr[i].year}</td>
               <td>${movieArr[i].genres}</td>
-              <td>${movieArr[i].ratings}</td>
+              <td>${MovieWiki.methods.getAverage(movieArr[i].ratings)}</td>
           </tr>`
           ;
         }
       },
-
-    }
+    },
 };
-
-
-
-// function openModal(index){
-//   const modalTitle = document.getElementById('modal-movie-title');
-//   const modalYear = document.getElementById('modal-movie-year');
-//   const modalGenres = document.getElementById('modal-movie-genres');
-//   const modalRating = document.getElementById('modal-movie-rating');
-//   const modalPoster = document.getElementById('modal-movie-poster');
-//
-//   overlay.classList.remove("is-hidden");
-//   modalTitle.innerHTML = MovieList[index].title;
-//   modalYear.innerHTML = MovieList[index].year;
-//   modalGenres.innerHTML = MovieList[index].genres;
-//   modalRating.innerHTML = MovieWiki.methods.getAverage(MovieList[index].ratings);
-//   modalPoster.src = MovieList[index].image;
-//   console.log(MovieList[index].title);
-// }
-
-// function getSelected() {
-//   let selctedMovieQuestion = document.getElementById("selected-movie-question");
-//   const yearInput = document.forms.movieYearInput;
-//   if (selctedMovieQuestion.selectedIndex === 0) {
-//     yearInput.innerHTML = '';
-//     MovieWiki.methods.createMovieList();
-//   }
-//   if (selctedMovieQuestion.selectedIndex === 1) {
-//     yearInput.innerHTML =
-//     `<label for="input-year">Enter year</label>
-//     <div class="row">
-//     <div class='col-9'>
-//     <input type="text" class="form-control" id="input-year" name="year" placeholder="Year...">
-//     </div>
-//     <div class='col-3'>
-//     <button class="btn btn-primary" id="sendMovieYear" type="submit">Get</button>
-//     </div>
-//     </div>
-//     `;
-//     document.getElementById("sendMovieYear").addEventListener("click", function(event){
-//     event.preventDefault();
-//     MovieWiki.methods.getMoviesThisYear(movieYearInput.year.value);
-//     });
-//   }
-//   if (selctedMovieQuestion.selectedIndex === 3) {
-//     yearInput.innerHTML = '';
-//     MovieWiki.methods.getTopRatedMovie();
-//   }
-//   if (selctedMovieQuestion.selectedIndex === 4) {
-//     yearInput.innerHTML = '';
-//     MovieWiki.methods.getWorstRatedMovie();
-//   }
-//
-// }
-
-// console.log(MovieWiki.methods.getMoviesByGenre('Action'));
-// function arrayContainsAnotherArray(needle, haystack){
-//   for(var i = 0; i < needle.length; i++){
-//     if(haystack.indexOf(needle[i]) === -1)
-//        return false;
-//   }
-//   return true;
-// }
-
-
-// console.log(arrayContainsAnotherArray(['a', 'b', 'c', 'd', 'e', 'f', ], ['a', 'b', 'c', 'd', 'f']));

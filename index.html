@@ -6,6 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>MovieWiki</title>
   <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="icons/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/circle.css">
   <link rel="stylesheet" href="css/main.css">
 </head>
 
@@ -41,6 +43,7 @@
 
     <div class="jumbotron">
       <h1 class="display-5 text-center">Filter Movies</h1>
+      <br />
           <select class="custom-select" id="selected-movie-question" onchange="MovieWiki.methods.getSelected()">
             <option>All</option>
             <option>By Year</option>
@@ -50,19 +53,114 @@
           </select>
           <div class="form-group">
             <form name="movieYearInput" class="invisible">
+              <br />
               <label for="input-year">Enter year</label>
-              <div class="row">
-              <div class="col-9">
-              <input type="text" class="form-control" id="input-year" name="year" placeholder="Year...">
-              </div>
-              <div class="col-3">
-              <!-- <button class="btn btn-primary" id="send-movie-year" onclick="MovieWiki.methods.getMoviesThisYear(movieYearInput.year.value)">Get</button> -->
-              </div>
-              </div>
-              </div>
+              <input type="text" class="form-control" name="year" placeholder="Year...">
+            </form>
+            <form name="movieGenreInput" class="invisible">
+              <br />
+              <label for="genre">Enter genre/genres</label>
+              <input type="text" class="form-control" name="genre" placeholder="Genre...">
             </form>
           </div>
+          </div>
+
       </div>
+
+     <div class="modal fade" id="movie-modal">
+         <div class="modal-dialog modal-lg">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                 </div>
+                 <div class="modal-body">
+                   <div class="container">
+                   <div class="row">
+                     <div class="col-sm-6">
+                       <img class="img-fluid" alt="Movie Poster" id="modal-movie-poster">
+                     </div>
+                   <div class="col-sm-6">
+                   <h4 class="modal-title" id='modal-movie-title'></h4>
+                   <div>
+                     <span class="text-muted" id="modal-movie-year"></span>
+                   </div>
+                   <div>
+                   <span class="badge badge-default" id="modal-movie-genres"></span>
+                   </div>
+                   <div class="c100 p86">
+                        <span id="modal-movie-rating"></span>
+                        <div class="slice">
+                            <div class="bar"></div>
+                            <div class="fill"></div>
+                        </div>
+                    </div>
+
+                   </div>
+                   </div>
+                   </div>
+                 </div>
+                 <div class="modal-footer">	<a href="#" data-dismiss="modal" class="btn">Close</a>
+     <button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#rate-modal">Rate</button>
+     <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#genre-modal">Edit Genre</button>
+
+                 </div>
+             </div>
+         </div>
+     </div>
+     <div class="modal fade" id="rate-modal">
+         <div class="modal-dialog">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                     <h5 class="modal-title">
+                       <i class="fa fa-star-o" aria-hidden="true"></i>
+                       Rate Movie
+                     </h5>
+                 </div>
+                 <div class="modal-body">
+                   <select class="custom-select" id="selected-rating">
+                     <option value="1">1</option>
+                     <option value="2">2</option>
+                     <option value="3">3</option>
+                     <option value="4">4</option>
+                     <option value="5">5</option>
+                     <option value="6">6</option>
+                     <option value="7">7</option>
+                     <option value="8">8</option>
+                     <option value="9">9</option>
+                     <option value="10">10</option>
+                   </select>
+                 </div>
+
+                 <div class="modal-footer">
+                   <a href="#" data-dismiss="modal" class="btn">Close</a>
+                   <a href="#" class="btn btn-primary" onclick="MovieWiki.methods.rateMovie()">Rate</a>
+                 </div>
+             </div>
+         </div>
+     </div>
+     <div class="modal fade" id="genre-modal">
+         <div class="modal-dialog">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                     	<h4 class="modal-title">Edit genre</h4>
+
+                 </div>
+                 <div class="container"></div>
+                 <div class="modal-body">Edit Genre
+                   <form name="editGenre">
+                  <input type="text" name="genre"/>
+                  </form>
+                 </div>
+                 <div class="modal-footer">
+                   <a href="#" data-dismiss="modal" class="btn">Close</a>
+     	<a href="#" class="btn btn-primary" onclick="MovieWiki.methods.editGenre()">Edit</a>
+
+                 </div>
+             </div>
+         </div>
+     </div>
 
 
 <div class="col-8">
@@ -88,55 +186,19 @@
 
 </div>
     </div>
-  </div>
 
-<div class="overlay is-hidden" id="overlay">
-  <div class="modal-dialog modal-lg">
-  <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title" id='modal-movie-title'></h4>
-        <button type="button" class="close" onclick="MovieWiki.methods.closeModal()">
-        <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-      <div class="container">
-      <div class="row">
-      <div class="col-sm-6">
-      <p>Year: <span id="modal-movie-year"></span></p>
-      <p>Genres: <span class="badge badge-default" id="modal-movie-genres"></span></p>
-      <p>Rating: <span id="modal-movie-rating"></span></p>
-      <button type="button" class="btn btn-outline-warning" onclick="MovieWiki.methods.rateMovie()">Rate</button>
-      <button type="button" class="btn btn-outline-secondary">Edit Genre</button>
-      <br />
-      <select class="custom-select invisible" id="selected-rating" onchange="MovieWiki.methods.getSelected()">
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
-        <option>6</option>
-        <option>7</option>
-        <option>8</option>
-        <option>9</option>
-        <option>10</option>
-      </select>
-      </div>
-      <div class="col-sm-6">
-        <img class="img-fluid" alt="Movie Poster" id="modal-movie-poster">
-      </div>
-      </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-      </div>
-</div>
+
+
+
 </div>
 
-
-
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/effects.js"></script>
 <script src="js/movies.js"></script>
 <script src="js/main.js"></script>
+<script src="js/polyfills.js"></script>
+<script src="js/watchers.js"></script>
 </body>
 </html>
