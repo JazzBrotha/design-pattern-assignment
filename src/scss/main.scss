@@ -41,9 +41,14 @@ input[type="checkbox"]:checked + label {
   	display: none;
   }
 
-.test  {
-  width: 3.33em;
-  line-height: 3.33em;
-  font-size: 0.3em;
-  color: #307bbb;
-  }
+.avatar-rectangle img {
+  border-radius: 0;
+}
+
+.modal.active .modal-container{
+  max-width: 1200px;
+}
+
+.modal-container .modal-body {
+    max-height: 1200px;
+}

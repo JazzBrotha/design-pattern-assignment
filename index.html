@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>MovieWiki</title>
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <link rel="stylesheet" href="icons/css/font-awesome.min.css">
-  <link rel="stylesheet" href="css/circle.css">
-  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" type="text/css" href="dist/icons/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="dist/css/circle.css">
+  <link rel="stylesheet" type="text/css" href="dist/css/spectre.min.css">
+  <link rel="stylesheet" type="text/css" href="dist/css/main.min.css">
 </head>
 
 <body>
@@ -67,13 +67,53 @@
 
       </div>
 
-     <div class="modal fade" id="movie-modal">
-         <div class="modal-dialog modal-lg">
-             <div class="modal-content">
-                 <div class="modal-header">
-                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+
+      <div class="modal" id="movie-modal">
+                <div class="modal-overlay"></div>
+                <div class="modal-container" role="document">
+                  <div class="modal-header">
+                    <a href="#modals" class="btn btn-clear float-right" aria-label="Close" id='modal-close'></a>
+                  </div>
+                  <div class="modal-body">
+                    <div class="content">
+                      <div class="container">
+                        <div class="columns">
+                          <div class="column col-6">
+                            <img class="" alt="Movie Poster" id="modal-movie-poster">
+                          </div>
+                          <div class="column col-6">
+                            <h4 class="modal-title" id='modal-movie-title'></h4>
+                              <span class="text-muted" id="modal-movie-year"></span>
+                            <span class="chip" id="modal-movie-genres"></span>
+                              <div class="c100" id="rating-circle">
+                                   <span id="modal-movie-rating"></span>
+                                   <div class="slice">
+                                       <div class="bar"></div>
+                                       <div class="fill"></div>
+                               </div>
+                            </div>
+                        </div>
+                      </div>
+                         <button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#rate-modal">Rate</button>
+                         <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#genre-modal">Edit Genre</button>
+                  </div>
+                  <div class="modal-footer">
+                    <a href="#modals" class="btn btn-link">Close</a>
+                    <button class="btn btn-primary">Share</button>
+                  </div>
+                </div>
+              </div>
+                   </div>
                  </div>
-                 <div class="modal-body">
+
+      <!-- <div class="modal active" id="movie-modal">
+    <div class="modal-overlay"></div>
+    <div class="modal-container">
+      <div class="modal-header">
+        <button class="btn btn-clear float-right"></button>
+        <div class="modal-title">Modal title</div>
+      </div>
+      <div class="modal-body">
                    <div class="container">
                    <div class="row">
                      <div class="col-sm-6">
@@ -110,8 +150,8 @@
 
                  </div>
              </div>
-         </div>
-     </div>
+         </div> -->
+
      <div class="modal fade" id="rate-modal">
          <div class="modal-dialog">
              <div class="modal-content">
@@ -178,6 +218,7 @@
   <table class="table table-striped table-hover table-hover-blue">
   <thead>
     <tr>
+      <th></th>
       <th>Title<button class="btn-empty dropdown-toggle" id="title-sort"></button></th>
       <th>Year
       <input type="checkbox" id="year-sort"/>
@@ -201,14 +242,7 @@
 
 
 </div>
-<script src="js/movies.js"></script>
-<script src="http://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/main.js"></script>
-<!-- <script src="js/polyfills.js"></script>
-<script src="js/watchers.js"></script> -->
-<script src="js/data-binding.js"></script>
-<script src="js/effects.js"></script>
-
+<script src="dist/js/bundle.js"></script>
+</script>
 </body>
 </html>
