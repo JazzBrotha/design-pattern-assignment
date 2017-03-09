@@ -56,7 +56,7 @@ const MovieWiki = {
       this.year = year;
       this.genres = genres;
       this.ratings = [];
-      this.image = image || 'dist/pics/movie-placeholder.svg';
+      this.image = image || '../pics/movie-placeholder.svg';
       }
   },
   //THIRD MAIN PROPERTY THAT CONTAINS ALL OF THE APP'S FUNCTIONALITY
@@ -64,24 +64,32 @@ const MovieWiki = {
     //CREATES A TABLE OF THE MovieDb IN THE DB AS THE INTERFACE FOR THE USER TO NAVIGATE
     //CALLED EACH TIME A NEW MOVIE IS ADDED
       createMovieList : function () {
-        Elements.movieTable.innerHTML = '';
+        Elements.cardContainer.innerHTML = '';
           for (let i = 0; i < Elements.movieList.length; i++){
-            Elements.movieTable.innerHTML +=
-            `<tr class="modal-opener" data-toggle="modal" data-id="${i + 1}">
-                <td><figure class="avatar avatar-xl avatar-rectangle"><img src="${Elements.movieList[i].image}"></img></figure></td>
-                <td>${Elements.movieList[i].title}</td>
-                <td>${Elements.movieList[i].year}</td>
-                <td class="list-genre">${Elements.movieList[i].genres}</td>
-                <td class="list-rating">${MovieWiki.methods.getAverage(Elements.movieList[i].ratings)}</td>
-            </tr>
-              <button type="button" name="button" id="testbutton">Test Me</button>
-              `
+            Elements.cardContainer.innerHTML +=
+          `
+          <div class="column col-3">
+             <div class="card">
+                          <div class="card-image">
+                            <img class="img-responsive" src="${Elements.movieList[i].image}">
+                          </div>
+                          <div class="card-header">
+                            <div class="card-title">${Elements.movieList[i].title}</div>
+                            <div class="card-meta">${Elements.movieList[i].year}</div>
+                          </div>
+                          <div class="card-body">
+                            <label class="chip">${Elements.movieList[i].genres}</label>
+                            <p>${MovieWiki.methods.getAverage(Elements.movieList[i].ratings)}</p>
+                          </div>
+                          <div class="card-footer">
+                            <a href="#cards" class="btn btn-secondary">Rate</a>
+                            <a href="#cards" class="btn btn-secondary">Edit genre</a>
+                          </div>
+                        </div>
+
+                        </div>
+          `
           ;
-          const test = document.getElementById('testbutton');
-          test.onclick = function() {
-            Elements.movieModal.classList.add('active');
-            MovieWiki.methods.createModal(i);
-          };
       }
 
       },
@@ -117,10 +125,11 @@ const MovieWiki = {
       //CALLS FUNCTIONS TO UPDATE LOCAL STORAGE AND MOVIE TABLE INTERFACE
       //USER WILL BE ABLE TO PROVIDE IMAGE COVER OF MOVIE IN NEXT DRAFT
       addMovie : function () {
-        let newMovie = new Movie(Elements.movieTitle.value, Elements.movieYear.value, Elements.movieGenres.value.split(','));
+        let newMovie = new Movie(Elements.movieTitle.value, Elements.movieYear.value, Elements.movieGenres.value.split(','), Elements.movieCover.value);
         Elements.movieList.push(newMovie);
         this.setMovieDb();
         this.createMovieList();
+        Elements.newMovieModal.classList.remove('active');
       },
       //USES THE DATA-BINDINGS.JS LIBRARY TO CREATE A TWO-WAY DATA BINDING FOR A
       //LIVE PREVIEW WHENEVER USER WISHES TO ADD A MOVIE
@@ -305,3 +314,24 @@ inputs[i].addEventListener("keydown", function(event) {
       }
     });
   }
+
+  Elements.movieCreator.onsubmit = function (e) {
+    e.preventDefault();
+    MovieWiki.methods.addMovie();
+};
+
+Elements.closeNewMovie.onclick = function () {
+  Elements.newMovieModal.classList.remove('active');
+};
+
+Elements.newMovieLink.onclick = function(){
+  Elements.newMovieModal.classList.add('active');
+};
+
+for (let i = 0; i < Elements.genreLinkName.length; i++) {
+  for (let j = 0; j < Elements.movieList.length; j++) {
+    if (Elements.movieList[j].genres.includes(Elements.genreLinkName[i].innerHTML)) {
+       Elements.genreLabelCount[i].innerHTML ++;
+    }
+  }
+}

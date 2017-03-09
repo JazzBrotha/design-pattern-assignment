@@ -1,11 +1,3 @@
-.table-hover {
-  cursor: pointer;
-}
-
-.table-hover-blue tbody tr:hover {
-  background-color: rgb(202, 208, 235);
-}
-
 .btn-empty {
   background-color: transparent;
   border: none;
@@ -45,10 +37,100 @@ input[type="checkbox"]:checked + label {
   border-radius: 0;
 }
 
-.modal.active .modal-container{
-  max-width: 1200px;
+
+/* Navigation Menu - Background */
+.navigation {
+  /* critical sizing and position styles */
+  width: 300px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 0;
+  box-shadow: none;
 }
 
-.modal-container .modal-body {
-    max-height: 1200px;
+
+/* Site Wrapper - Everything that isn't navigation */
+.site-wrap {
+  /* Critical position and size styles */
+  min-width: 100%;
+  min-height: 100%;
+  background-color: white; /* Needs a background or else the nav will show through */
+  position: relative;
+  top: 0;
+  bottom: 100%;
+  left: 0;
+  z-index: 1;
+
+  /* non-critical apperance styles */
+  padding: 4em;
+}
+
+/* Nav Trigger */
+.nav-trigger {
+  /* critical styles - hide the checkbox input */
+  position: absolute;
+  clip: rect(0, 0, 0, 0);
+}
+
+label[for="nav-trigger"] {
+  /* critical positioning styles */
+  position: fixed;
+  left: 15px; top: 15px;
+  z-index: 2;
+
+  /* non-critical apperance styles */
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' x='0px' y='0px' width='30px' height='30px' viewBox='0 0 30 30' enable-background='new 0 0 30 30' xml:space='preserve'><rect width='30' height='6'/><rect y='24' width='30' height='6'/><rect y='12' width='30' height='6'/></svg>");
+  background-size: contain;
+}
+
+/* Make the Magic Happen */
+.nav-trigger + label, .site-wrap {
+  transition: left 0.2s;
+}
+
+.nav-trigger:checked + label {
+  left: 315px;
+}
+
+.nav-trigger:checked ~ .site-wrap {
+  left: 300px;
+}
+.nav-trigger:checked ~ .navigation {
+  z-index: 2;
+  transition: ease 0.2s all;
+  box-shadow: 0 0.1rem 0.4rem rgba(0,0,0,.3);
+}
+
+
+body {
+	/* Without this, the body has excess horizontal scroll when the menu is open */
+  overflow-x: hidden;
+}
+
+.btn-xl {
+  height: 8rem;
+  width: 8rem;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mt-10 {
+  margin-top: 10rem;
+}
+
+.modal-lg {
+  width: 1024px;
 }
