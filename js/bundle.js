@@ -14,10 +14,14 @@ module.exports = function Movie(title, year, genres, image) {
 
 //FIRST MAIN PROPERTY THAT CONTAINS ALL THE HTML ELEMENTS FOR REFERENCE
 module.exports = {
+    cardContainer: document.getElementById('card-container'),
+    closeNewMovie: document.getElementById('close-new-movie'),
     genreButton: document.getElementById('genre-button'),
     genreErrorMessage: document.getElementById('error-message-genre'),
     genreForm: document.forms.editGenre,
     genreInput: document.forms.editGenre.genre,
+    genreLabelCount: document.getElementsByClassName('genre-label-count'),
+    genreLinkName: document.getElementsByClassName('genre-link-name'),
     genreSuccess: document.getElementById('genre-success'),
     listGenre: document.getElementsByClassName('list-genre'),
     listRating: document.getElementsByClassName('list-rating'),
@@ -27,17 +31,18 @@ module.exports = {
     modalRating: document.getElementById('modal-movie-rating'),
     modalTitle: document.getElementById('modal-movie-title'),
     modalYear: document.getElementById('modal-movie-year'),
-    movieCreator: document.getElementById('movie-creator'),
+    movieCover: document.forms.movieCreator.cover,
+    movieCreator: document.forms.movieCreator,
     movieGenreInput: document.forms.movieGenreInput,
-    movieGenres: document.forms.movieAdder.genres,
+    movieGenres: document.forms.movieCreator.genres,
     movieList: JSON.parse(localStorage.getItem("MovieDb")),
     movieModal: document.getElementById('movie-modal'),
     movieResult: document.getElementById('movie-result'),
-    movieTable: document.getElementById('movie-table'),
-    movieTitle: document.forms.movieAdder.title,
-    movieYear: document.forms.movieAdder.year,
+    movieTitle: document.forms.movieCreator.title,
+    movieYear: document.forms.movieCreator.year,
     movieYearInput: document.forms.movieYearInput,
-    overlay: document.getElementById('overlay'),
+    newMovieLink: document.getElementById('new-movie-link'),
+    newMovieModal: document.getElementById('new-movie-modal'),
     ratingButton: document.getElementById('rating-button'),
     ratingCirle: document.getElementById('rating-circle'),
     ratingSort: document.getElementById('rating-sort'),
@@ -119,7 +124,7 @@ var MovieWiki = {
       this.year = year;
       this.genres = genres;
       this.ratings = [];
-      this.image = image || 'dist/pics/movie-placeholder.svg';
+      this.image = image || '../pics/movie-placeholder.svg';
     }
   },
   //THIRD MAIN PROPERTY THAT CONTAINS ALL OF THE APP'S FUNCTIONALITY
@@ -127,19 +132,9 @@ var MovieWiki = {
     //CREATES A TABLE OF THE MovieDb IN THE DB AS THE INTERFACE FOR THE USER TO NAVIGATE
     //CALLED EACH TIME A NEW MOVIE IS ADDED
     createMovieList: function createMovieList() {
-      _elements2.default.movieTable.innerHTML = '';
-
-      var _loop = function _loop(i) {
-        _elements2.default.movieTable.innerHTML += '<tr class="modal-opener" data-toggle="modal" data-id="' + (i + 1) + '">\n                <td><figure class="avatar avatar-xl avatar-rectangle"><img src="' + _elements2.default.movieList[i].image + '"></img></figure></td>\n                <td>' + _elements2.default.movieList[i].title + '</td>\n                <td>' + _elements2.default.movieList[i].year + '</td>\n                <td class="list-genre">' + _elements2.default.movieList[i].genres + '</td>\n                <td class="list-rating">' + MovieWiki.methods.getAverage(_elements2.default.movieList[i].ratings) + '</td>\n            </tr>\n              <button type="button" name="button" id="testbutton">Test Me</button>\n              ';
-        var test = document.getElementById('testbutton');
-        test.onclick = function () {
-          _elements2.default.movieModal.classList.add('active');
-          MovieWiki.methods.createModal(i);
-        };
-      };
-
+      _elements2.default.cardContainer.innerHTML = '';
       for (var i = 0; i < _elements2.default.movieList.length; i++) {
-        _loop(i);
+        _elements2.default.cardContainer.innerHTML += '\n          <div class="column col-3">\n             <div class="card">\n                          <div class="card-image">\n                            <img class="img-responsive" src="' + _elements2.default.movieList[i].image + '">\n                          </div>\n                          <div class="card-header">\n                            <div class="card-title">' + _elements2.default.movieList[i].title + '</div>\n                            <div class="card-meta">' + _elements2.default.movieList[i].year + '</div>\n                          </div>\n                          <div class="card-body">\n                            <label class="chip">' + _elements2.default.movieList[i].genres + '</label>\n                            <p>' + MovieWiki.methods.getAverage(_elements2.default.movieList[i].ratings) + '</p>\n                          </div>\n                          <div class="card-footer">\n                            <a href="#cards" class="btn btn-secondary">Rate</a>\n                            <a href="#cards" class="btn btn-secondary">Edit genre</a>\n                          </div>\n                        </div>\n\n                        </div>\n          ';
       }
     },
     //UPDATES THE LOCALSTORAGE LIST OF MovieDb. CALLED UPON WHENEVER THERE IS A CHANGE
@@ -174,10 +169,11 @@ var MovieWiki = {
     //CALLS FUNCTIONS TO UPDATE LOCAL STORAGE AND MOVIE TABLE INTERFACE
     //USER WILL BE ABLE TO PROVIDE IMAGE COVER OF MOVIE IN NEXT DRAFT
     addMovie: function addMovie() {
-      var newMovie = new _constructor2.default(_elements2.default.movieTitle.value, _elements2.default.movieYear.value, _elements2.default.movieGenres.value.split(','));
+      var newMovie = new _constructor2.default(_elements2.default.movieTitle.value, _elements2.default.movieYear.value, _elements2.default.movieGenres.value.split(','), _elements2.default.movieCover.value);
       _elements2.default.movieList.push(newMovie);
       this.setMovieDb();
       this.createMovieList();
+      _elements2.default.newMovieModal.classList.remove('active');
     },
     //USES THE DATA-BINDINGS.JS LIBRARY TO CREATE A TWO-WAY DATA BINDING FOR A
     //LIVE PREVIEW WHENEVER USER WISHES TO ADD A MOVIE
@@ -313,6 +309,27 @@ for (var i = 0; i < inputs.length; i++) {
       event.preventDefault();
     }
   });
+}
+
+_elements2.default.movieCreator.onsubmit = function (e) {
+  e.preventDefault();
+  MovieWiki.methods.addMovie();
+};
+
+_elements2.default.closeNewMovie.onclick = function () {
+  _elements2.default.newMovieModal.classList.remove('active');
+};
+
+_elements2.default.newMovieLink.onclick = function () {
+  _elements2.default.newMovieModal.classList.add('active');
+};
+
+for (var _i = 0; _i < _elements2.default.genreLinkName.length; _i++) {
+  for (var j = 0; j < _elements2.default.movieList.length; j++) {
+    if (_elements2.default.movieList[j].genres.includes(_elements2.default.genreLinkName[_i].innerHTML)) {
+      _elements2.default.genreLabelCount[_i].innerHTML++;
+    }
+  }
 }
 
 },{"./constructor.js":1,"./elements.js":2,"./movies.js":4}],4:[function(require,module,exports){
