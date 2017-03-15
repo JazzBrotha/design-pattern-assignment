@@ -8,6 +8,7 @@
   <link rel="stylesheet" type="text/css" href="dist/icons/css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="dist/css/circle.css">
   <link rel="stylesheet" type="text/css" href="dist/css/spectre.min.css">
+  <link rel="stylesheet" type="text/css" href="dist/css/spectre-exp.min.css" />
   <link rel="stylesheet" type="text/css" href="dist/css/main.css">
 </head>
 
@@ -26,7 +27,7 @@
       <div class="menu-badge">
         <label class="label label-primary">2</label>
       </div>
-      <a href="#">
+      <a href="#" class="genre-link-name">
        Action
       </a>
     </li>
@@ -40,9 +41,25 @@
     </li>
     <li class="menu-item">
       <div class="menu-badge">
+        <label class="label label-primary genre-label-count">2</label>
+      </div>
+      <a href="#" class="genre-link-name">
+       Animation
+      </a>
+    </li>
+    <li class="menu-item">
+      <div class="menu-badge">
+        <label class="label label-primary genre-label-count">2</label>
+      </div>
+      <a href="#" class="genre-link-name">
+       Biography
+      </a>
+    </li>
+    <li class="menu-item">
+      <div class="menu-badge">
         <label class="label label-primary">2</label>
       </div>
-      <a href="#">
+      <a href="#" class="genre-link-name">
        Comedy
       </a>
     </li>
@@ -50,7 +67,7 @@
       <div class="menu-badge">
         <label class="label label-primary">2</label>
       </div>
-      <a href="#">
+      <a href="#" class="genre-link-name">
        Crime
       </a>
     </li>
@@ -58,7 +75,15 @@
       <div class="menu-badge">
         <label class="label label-primary">2</label>
       </div>
-      <a href="#">
+      <a href="#" class="genre-link-name">
+       Drama
+      </a>
+    </li>
+    <li class="menu-item">
+      <div class="menu-badge">
+        <label class="label label-primary">2</label>
+      </div>
+      <a href="#" class="genre-link-name">
        Family
       </a>
     </li>
@@ -66,7 +91,7 @@
       <div class="menu-badge">
         <label class="label label-primary">2</label>
       </div>
-      <a href="#">
+      <a href="#" class="genre-link-name">
        Fantasy
       </a>
     </li>
@@ -74,7 +99,7 @@
       <div class="menu-badge">
         <label class="label label-primary">2</label>
       </div>
-      <a href="#">
+      <a href="#" class="genre-link-name">
        History
       </a>
     </li>
@@ -82,7 +107,7 @@
       <div class="menu-badge">
         <label class="label label-primary">2</label>
       </div>
-      <a href="#">
+      <a href="#" class="genre-link-name">
        Horror
       </a>
     </li>
@@ -90,7 +115,7 @@
       <div class="menu-badge">
         <label class="label label-primary">2</label>
       </div>
-      <a href="#">
+      <a href="#" class="genre-link-name">
        Romance
       </a>
     </li>
@@ -98,8 +123,24 @@
       <div class="menu-badge">
         <label class="label label-primary">2</label>
       </div>
-      <a href="#">
+      <a href="#" class="genre-link-name">
+       Sci-Fi
+      </a>
+    </li>
+    <li class="menu-item">
+      <div class="menu-badge">
+        <label class="label label-primary">2</label>
+      </div>
+      <a href="#" class="genre-link-name">
        Thriller
+      </a>
+    </li>
+    <li class="menu-item">
+      <div class="menu-badge">
+        <label class="label label-primary">2</label>
+      </div>
+      <a href="#" class="genre-link-name">
+       Western
       </a>
     </li>
     <!-- menu divider -->
@@ -111,20 +152,27 @@
     </li>
     <li class="menu-item">
 
-      <a href="#">
+      <a href="#" id="top-rated-link">
          Top Rated
       </a>
     </li>
     <li class="menu-item">
 
-      <a href="#">
+      <a href="#" id="worst-rated-link">
        Worst Rated
       </a>
     </li>
     <li class="menu-item">
 
-      <a href="#">
+      <a href="#" id="year-sort">
          By Year
+      </a>
+      <input class="form-input hide" id="movie-year-input" placeholder="Enter year" type="text">
+    </li>
+    <li class="menu-item">
+
+      <a href="#" id="all-movies-link">
+         All
       </a>
     </li>
     <!-- menu divider -->
@@ -150,11 +198,12 @@
 
   </div>
 
+
   <div class="modal" id="new-movie-modal">
     <div class="modal-overlay"></div>
     <div class="modal-container modal-lg">
       <div class="modal-header">
-        <button class="btn btn-clear float-right" id="close-new-movie"></button>
+        <button class="btn btn-clear float-right modal-close-button"></button>
         <div class="modal-title">Add Movie</div>
       </div>
       <div class="modal-body">
@@ -202,191 +251,88 @@
   </div>
 
 
-    <div class="invisible">
-    <div class="jumbotron">
-    <h1 class="display-5 text-center">Add Movie</h1>
-    <br/>
-    <form name="movieAdder" onsubmit="MovieWiki.methods.addMovie()">
-      <div class="form-group row">
-        <label for="title" class="col-2 form-control-label">Title</label>
-        <div class="col-10">
-          <input type="text" required class="form-control title" name="title" placeholder="Add title..." onfocus="MovieWiki.methods.addMoviePreview()" title="Please Enter A Title"/>
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="year" class="col-2 form-control-label">Year</label>
-        <div class="col-10">
-          <input type="text" required class="form-control year" name="year" placeholder="Add year..." pattern="[\d]{4}" title="Release year may only contain 4 digits" />
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="genres" class="col-2 form-control-label">Genre</label>
-        <div class="col-10">
-          <input type="text" required class="form-control genre" name="genres" placeholder="Add genre..." pattern="[A-Za-z,-]+" title="Genres may only contain letters and can't include any blank space"/>
-        </div>
-      </div>
-        <button id="movie-creator" class="btn btn-primary btn-block">Submit</button>
-    </form>
-  </div>
-
-    <div class="jumbotron">
-      <h1 class="display-5 text-center">Filter Movies</h1>
-      <br />
-          <select class="custom-select" id="selected-movie-question" onchange="MovieWiki.methods.getSelected()">
-            <option>All</option>
-            <option>By Year</option>
-            <option>By Genre</option>
-            <option>Best Movie</option>
-            <option>Worst Movie</option>
-          </select>
-          <div class="form-group">
-            <form name="movieYearInput" class="invisible">
-              <br />
-              <label for="input-year">Enter year</label>
-              <input type="text" class="form-control" name="year" placeholder="Year...">
-            </form>
-            <form name="movieGenreInput" class="invisible">
-              <br />
-              <label for="genre">Enter genre/genres</label>
-              <input type="text" class="form-control" name="genre" placeholder="Genre...">
-            </form>
-          </div>
-          </div>
-
-
-      <div class="modal" id="movie-modal">
+     <div class="modal" id="edit-modal">
                 <div class="modal-overlay"></div>
                 <div class="modal-container" role="document">
                   <div class="modal-header">
-                    <a href="#modals" class="btn btn-clear float-right" aria-label="Close" id='modal-close'></a>
+                    <a href="#modals" class="btn btn-clear float-right modal-close-button" aria-label="Close"></a>
                   </div>
                   <div class="modal-body">
                     <div class="content">
-                      <div class="container">
-                        <div class="columns">
+                      <h4>Rate Movie</h4>
+                      <div class="columns">
                           <div class="column col-6">
-                            <img class="" alt="Movie Poster" id="modal-movie-poster">
+                            <div class="c100" id="new-rating-circle">
+                            <span id="new-rating-span"></span>
+                                 <div class="slice">
+                                     <div class="bar"></div>
+                                     <div class="fill"></div>
+                                 </div>
+                             </div>
+                             <input class="slider" type="range" min="1" max="10" value="0" id="rating-slider"/>
                           </div>
-                          <div class="column col-6">
-                            <h4 class="modal-title" id='modal-movie-title'></h4>
-                              <span class="text-muted" id="modal-movie-year"></span>
-                            <span class="chip" id="modal-movie-genres"></span>
-                              <div class="c100" id="rating-circle">
-                                   <span id="modal-movie-rating"></span>
-                                   <div class="slice">
-                                       <div class="bar"></div>
-                                       <div class="fill"></div>
-                               </div>
-                            </div>
-                        </div>
                       </div>
-                         <button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#rate-modal">Rate</button>
-                         <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#genre-modal">Edit Genre</button>
+                      <h4>Set Genres</h4>
+                      <div id="genre-container">
+                        <div class="chip genre-edit-chip">
+                          Action
+                        </div>
+                        <div class="chip genre-edit-chip">
+                          Adventure
+                        </div>
+                        <div class="chip genre-edit-chip">
+                          Animation
+                        </div>
+                        <div class="chip genre-edit-chip">
+                          Biography
+                        </div>
+                        <div class="chip genre-edit-chip">
+                          Comedy
+                        </div>
+                        <div class="chip genre-edit-chip">
+                          Crime
+                        </div>
+                        <div class="chip genre-edit-chip">
+                          Drama
+                        </div>
+                        <div class="chip genre-edit-chip">
+                          Family
+                        </div>
+                        <div class="chip genre-edit-chip">
+                          Fantasy
+                        </div>
+                        <div class="chip genre-edit-chip">
+                          History
+                        </div>
+                        <div class="chip genre-edit-chip">
+                          Horror
+                        </div>
+                        <div class="chip genre-edit-chip">
+                          Romance
+                        </div>
+                        <div class="chip genre-edit-chip">
+                          Sci-Fi
+                        </div>
+                        <div class="chip genre-edit-chip">
+                          Thriller
+                        </div>
+                        <div class="chip genre-edit-chip">
+                          Western
+                        </div>
+                   </div>
+                    </div>
                   </div>
                   <div class="modal-footer">
-                    <a href="#modals" class="btn btn-link">Close</a>
-                    <button class="btn btn-primary">Share</button>
+                    <button class="btn btn-primary" id="submit-edit-button">Edit</button>
                   </div>
                 </div>
               </div>
-                   </div>
-                 </div>
-
-      <div class="modal active" id="movie-modal">
-    <div class="modal-overlay"></div>
-    <div class="modal-container">
-      <div class="modal-header">
-        <button class="btn btn-clear float-right"></button>
-        <div class="modal-title">Modal title</div>
-      </div>
-      <div class="modal-body">
-                   <div class="container">
-                   <div class="row">
-                     <div class="col-sm-6">
-                       <img class="img-fluid" alt="Movie Poster" id="modal-movie-poster">
-                     </div>
-                   <div class="col-sm-6">
-                   <h4 class="modal-title" id='modal-movie-title'></h4>
-                   <div>
-                     <span class="text-muted" id="modal-movie-year"></span>
-                   </div>
-                   <div>
-                   <span class="badge badge-default genre" id="modal-movie-genres"></span>
-                   </div>
-                   <div class="clearfix">
-                     <div class="c100" id="rating-circle">
-                          <span id="modal-movie-rating"></span>
-                          <div class="slice">
-                              <div class="bar"></div>
-                              <div class="fill"></div>
-                          </div>
-                      </div>
-                   </div>
-                    <div class="row">
-                      <button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#rate-modal">Rate</button>
-                      <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#genre-modal">Edit Genre</button>
-                    </div>
-
-                   </div>
-                   </div>
-                   </div>
-                 </div>
-                 <div class="modal-footer">	<a href="#" data-dismiss="modal" class="btn">Close</a>
 
 
-                 </div>
-             </div>
-         </div>
-
-     <div class="modal fade" id="rate-modal">
-         <div class="modal-dialog">
-             <div class="modal-content">
-                 <div class="modal-header">
-                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                     <h5 class="modal-title">
-                       <i class="fa fa-star-o" aria-hidden="true"></i>
-                       Rate Movie
-                     </h5>
-                 </div>
-                 <div class="modal-body">
-                   <select class="custom-select" id="selected-rating">
-                     <option value="1">1</option>
-                     <option value="2">2</option>
-                     <option value="3">3</option>
-                     <option value="4">4</option>
-                     <option value="5">5</option>
-                     <option value="6">6</option>
-                     <option value="7">7</option>
-                     <option value="8">8</option>
-                     <option value="9">9</option>
-                     <option value="10">10</option>
-                   </select>
-                   <a href="#" class="btn btn-primary" id="rating-button" data-dismiss="modal">Rate</a>
-                 </div>
-
-                 <div class="modal-footer">
-                   <a href="#" data-dismiss="modal" class="btn">Close</a>
-                 </div>
-             </div>
-         </div>
-     </div>
-     <div class="modal fade" id="genre-modal">
-         <div class="modal-dialog">
-             <div class="modal-content">
-                 <div class="modal-header">
-                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                     	<h4 class="modal-title">Edit genre</h4>
-
-                 </div>
+                 <!-- </div>
                  <div class="container"></div>
                  <div class="modal-body">
-                   <form name="editGenre">
-                     <div class="form-group">
-                       <label for="genre" class="form-control-label">Edit Genre</label>
-                       <input type="text" required class="form-control genre" name="genre" pattern="[A-Za-z,-]+" title="Genres may only contain letters and can't include any blank space" />
-                     </div>
-                  	<button type="submit" class="btn btn-primary" id="genre-button">Edit</button>
-                  </form>
+
                   <div class="alert alert-success invisible" role="alert" id="genre-success">
                     Movie genre updated.
                 </div>
@@ -397,14 +343,125 @@
                  </div>
              </div>
          </div>
-     </div>
-   </div>
+     </div> -->
+
 
 
 
 
     </section>
+
+
+<div id="mySidenav" class="sidenav">
+<a id="close" class="closebtn">&times;</a>
+<img class="img-responsive" id="modal-movie-poster" alt="">
+<div class="text-center movie-info">
+  <h4 class="movie-header" id="modal-movie-title"></h4>
+  <h4 class="movie-year" id="modal-movie-year"></h4>
 </div>
+
+<div class="columns">
+  <div class="column col-6 col-xs-12">
+<div class="panel panel-borderless p-2">
+ <nav class="panel-nav">
+   <ul class="tab tab-block">
+     <li class="tab-item active">
+       <a href="#panels">
+         Overview
+       </a>
+     </li>
+     <li class="tab-item">
+       <a href="#panels">
+         Plot
+       </a>
+     </li>
+   </ul>
+ </nav>
+ <div class="panel-body centered">
+   <div class="tile tile-centered">
+     <div class="tile-content">
+        <div class="c100" id="rating-circle">
+             <span id="modal-movie-rating"></span>
+             <div class="slice">
+                 <div class="bar"></div>
+                 <div class="fill"></div>
+             </div>
+         </div>
+     </div>
+     <div class="tile-action">
+       <button class="btn btn-link btn-action btn-lg"></button>
+     </div>
+   </div>
+   <div class="tile tile-centered">
+     <div class="tile-content">
+       <div class="tile-meta" id="modal-movie-genres"></div>
+     </div>
+   </div>
+ </div>
+ <div class="panel-footer">
+   <button class="btn btn-primary btn-block" id="edit-button">Edit</button>
+ </div>
+</div>
+</div>
+<div class="column col-6 col-xs-12">
+              <div class="panel panel-borderless">
+                <div class="text-normal mt-3">Cast</div>
+                    <div class="divider"></div>
+                <div class="panel-body">
+                  <div class="tile">
+                    <div class="tile-icon">
+                      <figure class="avatar" data-initial="TO">
+                      </figure>
+                    </div>
+                    <div class="tile-content">
+                      <p class="tile-title">Thor Odinson</p>
+                    </div>
+                  </div>
+                  <div class="tile">
+                    <div class="tile-icon">
+                      <figure class="avatar" data-initial="BB">
+                      </figure>
+                    </div>
+                    <div class="tile-content">
+                      <p class="tile-title">Bruce Banner</p>
+                    </div>
+                  </div>
+                  <div class="tile">
+                    <div class="tile-icon">
+                      <figure class="avatar" data-initial="TS"></figure>
+                    </div>
+                    <div class="tile-content">
+                      <p class="tile-title">Tony Stark</p>
+                    </div>
+                  </div>
+                  <div class="tile">
+                    <div class="tile-icon">
+                      <figure class="avatar" data-initial="SR">
+                      </figure>
+                    </div>
+                    <div class="tile-content">
+                      <p class="tile-title">Steve Rogers</p>
+                    </div>
+                  </div>
+                  <div class="tile">
+                    <div class="tile-icon">
+                      <figure class="avatar" data-initial="NR">
+                      </figure>
+                    </div>
+                    <div class="tile-content">
+                      <p class="tile-title">Natasha Romanoff</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="panel-footer">
+                </div>
+              </div>
+            </div>
+
+</div>
+
+
+ </div>
 
 <script src="dist/js/bundle.js"></script>
 </script>
