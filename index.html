@@ -186,7 +186,7 @@
       <input class="form-input" placeholder="Search movie title..." type="text">
     </li>
     <div class="flex-center mt-10">
-      <button class="btn btn-primary btn-xl tooltip circle" data-tooltip="Add Movie" data-tooltip-pos="top" id="new-movie-link">+</button>
+      <button class="btn btn-primary btn-xl tooltip circle" data-tooltip="Add Movie" data-tooltip-pos="top" id="new-movie-button">+</button>
     </div>
   </ul>
 
@@ -274,51 +274,21 @@
                       </div>
                       <h4>Set Genres</h4>
                       <div id="genre-container">
-                        <div class="chip genre-edit-chip">
-                          Action
-                        </div>
-                        <div class="chip genre-edit-chip">
-                          Adventure
-                        </div>
-                        <div class="chip genre-edit-chip">
-                          Animation
-                        </div>
-                        <div class="chip genre-edit-chip">
-                          Biography
-                        </div>
-                        <div class="chip genre-edit-chip">
-                          Comedy
-                        </div>
-                        <div class="chip genre-edit-chip">
-                          Crime
-                        </div>
-                        <div class="chip genre-edit-chip">
-                          Drama
-                        </div>
-                        <div class="chip genre-edit-chip">
-                          Family
-                        </div>
-                        <div class="chip genre-edit-chip">
-                          Fantasy
-                        </div>
-                        <div class="chip genre-edit-chip">
-                          History
-                        </div>
-                        <div class="chip genre-edit-chip">
-                          Horror
-                        </div>
-                        <div class="chip genre-edit-chip">
-                          Romance
-                        </div>
-                        <div class="chip genre-edit-chip">
-                          Sci-Fi
-                        </div>
-                        <div class="chip genre-edit-chip">
-                          Thriller
-                        </div>
-                        <div class="chip genre-edit-chip">
-                          Western
-                        </div>
+                        <label class="chip genre-edit-chip">Action</label>
+                        <label class="chip genre-edit-chip">Adventure</label>
+                        <label class="chip genre-edit-chip">Animation</label>
+                        <label class="chip genre-edit-chip">Biography</label>
+                        <label class="chip genre-edit-chip">Comedy</label>
+                        <label class="chip genre-edit-chip">Crime</label>
+                        <label class="chip genre-edit-chip">Drama</label>
+                        <label class="chip genre-edit-chip">Family</label>
+                        <label class="chip genre-edit-chip">Fantasy</label>
+                        <label class="chip genre-edit-chip">History</label>
+                        <label class="chip genre-edit-chip">Horror</label>
+                        <label class="chip genre-edit-chip">Romance</label>
+                        <label class="chip genre-edit-chip">Sci-Fi</label>
+                        <label class="chip genre-edit-chip">Thriller</label>
+                        <label class="chip genre-edit-chip">Western</label>
                    </div>
                     </div>
                   </div>
@@ -353,7 +323,7 @@
 
 
 <div id="mySidenav" class="sidenav">
-<a id="close" class="closebtn">&times;</a>
+<a id="close-movie-button" class="closebtn">&times;</a>
 <img class="img-responsive" id="modal-movie-poster" alt="">
 <div class="text-center movie-info">
   <h4 class="movie-header" id="modal-movie-title"></h4>
@@ -377,8 +347,8 @@
      </li>
    </ul>
  </nav>
- <div class="panel-body centered">
-   <div class="tile tile-centered">
+ <div class="panel-body">
+   <div class="tile">
      <div class="tile-content">
         <div class="c100" id="rating-circle">
              <span id="modal-movie-rating"></span>

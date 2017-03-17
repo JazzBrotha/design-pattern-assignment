@@ -142,22 +142,11 @@ html, body {
     margin-left: 50px;
     cursor: pointer;
     color: #999;
-    opacity: .85;
-    background: transparent;
     text-decoration: none;
-    -webkit-transition: all .3s ease-in-out;
-    transition: all .3s ease-in-out;
 }
-
-.sidenav .closebtn:hover {
-  opacity: 1;
-  transform: scale(1.1);
-}
-
 
 
 //
-
 
 .btn-xl {
   height: 8rem;
@@ -226,4 +215,12 @@ font-size: 1.3rem
 
 .movie-info {
   padding: 1.5rem 1.5rem 0 1.5rem;
+}
+
+.card {
+  cursor: pointer;
+}
+
+.bar-item {
+  background-color: #818BD5
 }
