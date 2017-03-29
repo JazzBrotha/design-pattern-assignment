@@ -1,15 +1,13 @@
 //jshint esversion:6
-import Elements from './elements.js'
-import Controller from './controller.js'
-import Model from './model.js'
-import {getAverage} from './helpers.js'
+import Elements from './elements'
+import {getAverage, bindEvent} from './helpers'
 
 
 export default {
 
   //CREATES A TABLE OF THE MovieDb IN THE DB AS THE INTERFACE FOR THE USER TO NAVIGATE
   //CALLED EACH TIME A NEW MOVIE IS ADDED
-createMovieList : function(movieArr) {
+createMovieList(movieArr) {
   Elements.cardContainer.innerHTML = '';
     for(let movie of movieArr) {
       Elements.cardContainer.innerHTML +=
@@ -46,7 +44,7 @@ createMovieList : function(movieArr) {
   },
 
   // Opens sidebar for selected movie
-  openNav : function(index) {
+  openMovieView(index) {
     Elements.moviePreview.style.width = "600px";
     Elements.modalTitle.innerHTML = Elements.cardMovieTitle[index].innerHTML;
     Elements.modalYear.innerHTML = Elements.cardMovieYear[index].innerHTML;
@@ -57,40 +55,61 @@ createMovieList : function(movieArr) {
   },
 
   // Closes sidebar for current movie
-  closeNav : function() {
-        Elements.moviePreview.style.width = "0";
+  closeMovieView() {
+    Elements.moviePreview.style.width = "0";
   },
 
   // Displays edit modal for current movie
-  editMovieModal : function() {
+  editMovieModal() {
+    let movieGenres = Array.from(Elements.modalGenres.childNodes);
+    let genreChips = Array.from(Elements.genreEditChip);
     Elements.editModal.classList.add('active');
     Elements.newRatingSpan.innerHTML = Elements.modalRating.innerHTML;
     Elements.newRatingCircle.classList = Elements.ratingCirle.classList;
     Elements.ratingSlider.value = 0;
-    // console.log(Elements.modalGenres.innerHTML);
-    for (let childNode of Elements.modalGenres.childNodes) {
-      console.log(childNode.innerHTML);
-    }
-    let childNodeArr = [];
-    // console.log(childNodeArr);
-      for (let node of Elements.genreContainer.childNodes) {
-        if (node.innerHTML !== undefined) {
-          console.log(node.innerHTML);
+
+    // Clears any active states if user has selected genres without submiting them
+    genreChips.forEach(chip => {
+      if (chip.classList.contains('active'))
+      chip.classList.remove('active');
+    });
+
+    // Adds active state to current movie's genres
+    movieGenres.forEach(genre => {
+      genreChips.map(chip => {
+        if (chip.innerHTML === genre.innerHTML)
+        chip.classList.add('active');
+      });
+    });
+  },
+
+  // Display new movie genres and rating after editing
+  changeMovieHTML() {
+    let movieGenres = Array.from(Elements.modalGenres.childNodes);
+    let genreChips = Array.from(Elements.genreEditChip);
+    Elements.editModal.classList.remove('active');
+    Elements.modalGenres.innerHTML = '';
+    genreChips.forEach(chip => {
+        if (chip.classList.contains('active')) {
+          Elements.modalGenres.innerHTML +=  `<label class="chip genre-chip">${chip.innerHTML}</label>`;
         }
-      // for (let editChip of Elements.genreEditChip) {
-      //   if (genreChip. === editChip.innerHTML.trim()) {
-      //     editChip.classList.add('active');
-      //     }
-      //   }
-    }
+      });
+      for (let i = 0; i < Elements.cardMovieTitle.length; i++) {
+        if (Elements.cardMovieTitle[i].innerHTML === Elements.modalTitle.innerHTML) {
+          Elements.cardMovieGenre[i].innerHTML = Elements.modalGenres.innerHTML;
+          }
+        }
+
+        // Rating changes to go here
   },
 
   // Close current active modal
-  closeActiveModal : function(i) {
+  closeActiveModal(i) {
     Elements.modals[i].classList.remove('active');
   },
+
   // Display function for top rated and worst rated
-  displayMovie : function(movie) {
+  displayMovie(movie) {
     let titleCardArr = Array.from(Elements.cardMovieTitle);
       titleCardArr.filter((title, i) =>
         movie.title === title.innerHTML
@@ -99,7 +118,7 @@ createMovieList : function(movieArr) {
     );
   },
   // Display function used to display by genre or year
-  displayMovies : function(arr) {
+  displayMovies(arr) {
     let titleCardArr = Array.from(Elements.cardMovieTitle);
     let movieTitleArr = arr.map(movie =>
       movie.title
@@ -111,32 +130,40 @@ createMovieList : function(movieArr) {
     );
   },
 
-  //Display movie modal for adding movie
-  displayNewMovieModal : function() {
+  // Display movie modal for adding movie
+  displayNewMovieModal() {
     Elements.newMovieModal.classList.add('active');
+    Elements.movieTitle.focus();
+    Elements.movieTitle.select();
   },
 
   // Visually changes rating circle as slider value changes
-  displayRating: function() {
-    Elements.ratingSlider.oninput = function() {
+  displayRating() {
       Elements.newRatingSpan.innerHTML = this.value;
       Elements.newRatingCircle.className = `c100 p${this.value * 10}`;
-    };
-  }(),
+  },
   // Shows input field for year search
-  displayYearInput : function() {
+  displayYearInput() {
     Elements.movieYearInput.classList.remove('hide');
     Elements.movieYearInput.focus();
     Elements.movieYearInput.select();
+    bindEvent(document.body, e => {
+      if (e.target !== this) {
+        Elements.movieYearInput.classList.add('hide');
+      }
+    });
   },
-  displayAllMovies : function() {
+
+  // Display all movie cards
+  displayAllMovies() {
     let movieCardArr = Array.from(Elements.movieCardContainer);
     return movieCardArr.forEach(card =>
       card.style.display = "block"
     );
   },
+
   //Prevents blank space as first character in all input fields
-  blockWhiteSpace : function() {
+  blockWhiteSpace() {
   for (let input of Elements.inputs) {
     input.addEventListener("keydown", function(event) {
       if (event.which === 32 && event.target.selectionStart === 0) {
@@ -144,13 +171,13 @@ createMovieList : function(movieArr) {
         }
       });
     }
-  }(),
+  },
+
   // Renders HTML for new movie
-  displayNewMovie: function (newMovie, i) {
-    Elements.newMovieModal.classList.remove('active');
-    Elements.cardContainer.innerHTML +=
-    `<div class="column col-3 movie-card-container">
-       <div class="card">
+  renderNewMovie (newMovie, i) {
+    const movieCard = document.createElement('div');
+    movieCard.setAttribute('class', 'column col-3 movie-card-container');
+    movieCard.innerHTML = `<div class="card">
           <div class="card-image">
             <img class="img-responsive card-movie-cover">
           </div>
@@ -167,6 +194,8 @@ createMovieList : function(movieArr) {
       </div>
     </div>`;
 
+    Elements.cardContainer.appendChild(movieCard);
+
     Elements.cardMovieCover[i].src = newMovie.image || 'dist/pics/movie-placeholder.svg';
     Elements.cardMovieTitle[i].innerHTML = newMovie.title;
     Elements.cardMovieYear[i].innerHTML = newMovie.year;
@@ -175,10 +204,12 @@ createMovieList : function(movieArr) {
     for (let genre of newMovie.genres) {
       Elements.cardMovieGenre[i].innerHTML +=  `<label class="chip">${genre}</label>`;
     }
+
+    Elements.newMovieModal.classList.remove('active');
   },
 
   // Previews genres for user when editing movie
-  previewGenres: function(genre) {
+  previewGenres(genre) {
         if (!genre.classList.contains('active')) {
            genre.classList.add('active');
         }

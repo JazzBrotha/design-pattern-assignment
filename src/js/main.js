@@ -1,9 +1,7 @@
 //jshint esversion:6
-import MovieDb from './movies.js'
-import Elements from './elements.js'
-import Controller from './controller.js'
-import Model from './model.js'
-import View from './view.js'
+import Model from './model'
+import View from './view'
+import Controller from './controller'
 // import './polyfills.js'
 // import {updateValue} from './watchers.js'
 
@@ -35,19 +33,18 @@ SIMILAR TO A MORE CLASSIC MODULE PATTERN.
 //SOMETIMES DOESN'T LOAD ON FIRST ATTEMPT AND THE USER NEEDS TO REFRESH PAGE
 //HAVE TRIED FIXING THIS BY SHIFITING LOADING ORDER OF SCRIPTS BUT TO NO
 //PERMANENT SOLUTION. WILL FIX IN NEXT DRAFT
-window.onload = function () {
+
   if (typeof(Storage) !== "undefined") {
-    // if(localStorage.getItem("MovieDb") === null) {
+    if(localStorage.getItem("0") === null) {
     Model.setInitialDb();
-      // }
     }
+  }
   //INFORMS THE READER IF LOCAL STORAGE IS NOT SUPPORTED
    else {
       alert("Sorry! No Web Storage support available. Please consider switching to another browser.");
   }
-};
 
 let movieArr = Model.parseMovieArr();
 //CALLS FUNCTION TO RENDER THE INERFACE OF THE APP
 View.createMovieList(movieArr);
-Controller.sideBarOpener();
+Controller();
