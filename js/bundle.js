@@ -5,121 +5,105 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _elements = require('./elements.js');
+exports.default = function () {
 
-var _elements2 = _interopRequireDefault(_elements);
-
-var _model = require('./model.js');
-
-var _model2 = _interopRequireDefault(_model);
-
-var _view = require('./view.js');
-
-var _view2 = _interopRequireDefault(_view);
-
-var _helpers = require('./helpers.js');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-//jshint esversion: 6
-exports.default = {
-
-  // Binds close button on every modal to close the repspective modal
-  closeModal: function () {
-    var modalCloseButtonArr = Array.from(_elements2.default.modalCloseButton);
-    modalCloseButtonArr.forEach(function (button, i) {
-      button.onclick = function () {
-        _view2.default.closeActiveModal(i);
-      };
+  // Binds close button on every modal to close the respective modal
+  var modalCloseButtonArr = Array.from(_elements2.default.modalCloseButton);
+  modalCloseButtonArr.forEach(function (button, i) {
+    (0, _helpers.bindEvent)(button, function () {
+      _view2.default.closeActiveModal(i);
     });
-  }(),
+  });
 
   // Binds button to open modal for adding new movie
-  openNewMovieModal: function () {
-    _elements2.default.newMovieButton.onclick = _view2.default.displayNewMovieModal;
-  }(),
+  (0, _helpers.bindEvent)(_elements2.default.newMovieButton, _view2.default.displayNewMovieModal);
 
-  // Handling of new movie form
-  movieAdder: function () {
-    _elements2.default.movieCreator.onsubmit = function (e) {
-      e.preventDefault();
-      var newMovie = new _helpers.Movie(_elements2.default.movieTitle.value, _elements2.default.movieYear.value, _elements2.default.movieGenres.value.split(','), _elements2.default.movieCover.value);
-      var index = _model2.default.addMovie(newMovie);
-      _view2.default.displayNewMovie(newMovie, index);
-    };
-  }(),
-  //
-  // Binding top rated
-  topRated: function () {
-    var movie = _model2.default.getTopRatedMovie();
-    _elements2.default.topRatedLink.onclick = function () {
-      _view2.default.displayMovie(movie);
-    };
-  }(),
-  // Bind worst rated
-  worstRated: function () {
-    var movie = _model2.default.getWorstRatedMovie();
-    _elements2.default.worstRatedLink.onclick = function () {
-      _view2.default.displayMovie(movie);
-    };
-  }(),
-  // Call view function to display all movies
-  callAllMovies: function () {
-    _elements2.default.allMoviesLink.onclick = _view2.default.displayAllMovies;
-  }(),
-  // Create click functions for all menu genre links
-  genreLinks: function () {
-    var genreLinkArr = Array.from(_elements2.default.genreLinkName);
-    genreLinkArr.forEach(function (link) {
-      link.onclick = function () {
-        var genre = this.innerHTML.trim();
-        var movieArr = _model2.default.getMoviesByGenre(genre);
-        _view2.default.displayMovies(movieArr);
-      };
+  // Handling of new movie
+  (0, _helpers.bindEvent)(_elements2.default.movieCreator, function (e) {
+    e.preventDefault();
+    var newMovie = new _helpers.Movie(_elements2.default.movieTitle.value, parseInt(_elements2.default.movieYear.value), _elements2.default.movieGenres.value.split(','), _elements2.default.movieCover.value);
+    var index = _model2.default.addMovie(newMovie);
+    _view2.default.renderNewMovie(newMovie, index);
+    (0, _helpers.bindEvent)(_elements2.default.movieCardContainer[index], function () {
+      _view2.default.openMovieView(index);
     });
-  }(),
-  //
-  // Creating click function for year filter on menu
-  sortByYear: function () {
-    _elements2.default.yearSort.onclick = _view2.default.displayYearInput;
-    _elements2.default.movieYearInput.addEventListener('keyup', function () {
-      var year = this.value;
-      var movieArr = _model2.default.getMoviesThisYear(year);
+    _view2.default.displayAllMovies();
+  }, 'submit');
+
+  // Binding top rated
+  (0, _helpers.bindEvent)(_elements2.default.topRatedLink, function () {
+    var movie = _model2.default.getTopRatedMovie();
+    _view2.default.displayMovie(movie);
+  });
+
+  // Bind worst rated
+  (0, _helpers.bindEvent)(_elements2.default.worstRatedLink, function () {
+    var movie = _model2.default.getWorstRatedMovie();
+    _view2.default.displayMovie(movie);
+  });
+
+  // Call view function to display all movies
+  (0, _helpers.bindEvent)(_elements2.default.allMoviesLink, _view2.default.displayAllMovies);
+
+  // Create click functions for all menu genre links
+  var genreLinkArr = Array.from(_elements2.default.genreLinkName);
+  genreLinkArr.forEach(function (link) {
+    (0, _helpers.bindEvent)(link, function () {
+      var genre = this.innerHTML.trim();
+      var movieArr = _model2.default.getMoviesByGenre(genre);
       _view2.default.displayMovies(movieArr);
     });
-  }(),
+  });
 
-  // // Close movie preview when clicking on button
-  closeMoviePreview: function () {
-    _elements2.default.closeMovieButton.onclick = _view2.default.closeNav;
-  }(),
-  //
-  // Click function to open movie sidebar view
-  sideBarOpener: function sideBarOpener() {
-    var movieCardArr = Array.from(_elements2.default.movieCards);
-    movieCardArr.forEach(function (card, index) {
-      card.onclick = function () {
-        _view2.default.openNav(index);
-      };
+  // Creating click function for year filter on menu
+  (0, _helpers.bindEvent)(_elements2.default.yearSort, _view2.default.displayYearInput);
+  (0, _helpers.bindEvent)(_elements2.default.movieYearInput, function () {
+    var year = this.value;
+    var movieArr = _model2.default.getMoviesThisYear(year);
+    _view2.default.displayMovies(movieArr);
+  }, 'keyup');
+
+  // Close movie preview when clicking on button
+  (0, _helpers.bindEvent)(_elements2.default.closeMovieButton, _view2.default.closeMovieView);
+
+  // Click function to open movie sidebar view for all current movies in db
+  var movieCardArr = Array.from(_elements2.default.movieCardContainer);
+  movieCardArr.forEach(function (card, index) {
+    (0, _helpers.bindEvent)(card, function () {
+      _view2.default.openMovieView(index);
     });
-  },
-  editMovie: function () {
-    _elements2.default.editButton.onclick = function () {
-      _view2.default.editMovieModal();
-    };
-  }(),
-  genreClickPreview: function () {
+  });
+
+  // Open edit movie view
+  (0, _helpers.bindEvent)(_elements2.default.editButton, _view2.default.editMovieModal);
+
+  // Bind rating slider changes when editing movie
+  (0, _helpers.bindEvent)(_elements2.default.ratingSlider, _view2.default.displayRating, 'input');
+
+  // Preview active genres when editing movie
+  var genreChips = Array.from(_elements2.default.genreEditChip);
+  genreChips.forEach(function (chip) {
+    (0, _helpers.bindEvent)(chip, function () {
+      _view2.default.previewGenres(this);
+    });
+  });
+
+  // Submit changes to edited movie
+  (0, _helpers.bindEvent)(_elements2.default.submitEditButton, function () {
+    var genres = [];
+    var rating = void 0;
+    var title = _elements2.default.modalTitle.innerHTML;
     var _iteratorNormalCompletion = true;
     var _didIteratorError = false;
     var _iteratorError = undefined;
 
     try {
       for (var _iterator = _elements2.default.genreEditChip[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-        var genreChip = _step.value;
+        var activeGenres = _step.value;
 
-        genreChip.onclick = function () {
-          _view2.default.previewGenres(this);
-        };
+        if (activeGenres.classList.contains('active')) {
+          genres.push(activeGenres.innerHTML.trim());
+        }
       }
     } catch (err) {
       _didIteratorError = true;
@@ -135,49 +119,33 @@ exports.default = {
         }
       }
     }
-  }(),
-  editMovieModal: function editMovieModal() {
-    var _this = this;
 
-    _elements2.default.submitEditButton.onclick = function () {
-      var newGenreArr = [];
-      var _iteratorNormalCompletion2 = true;
-      var _didIteratorError2 = false;
-      var _iteratorError2 = undefined;
+    if (!_elements2.default.newRatingCircle.innerHTML.includes('.')) {
+      rating = parseInt(_elements2.default.ratingSlider.value);
+    }
 
-      try {
-        for (var _iterator2 = _elements2.default.genreEditChip[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-          var activeGenres = _step2.value;
-
-          if (activeGenres.classList.contains('active')) {
-            newGenreArr.push(activeGenres.innerHTML.trim());
-          }
-        }
-      } catch (err) {
-        _didIteratorError2 = true;
-        _iteratorError2 = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion2 && _iterator2.return) {
-            _iterator2.return();
-          }
-        } finally {
-          if (_didIteratorError2) {
-            throw _iteratorError2;
-          }
-        }
-      }
-
-      _this.editGenre(index, newGenreArr);
-      if (!_elements2.default.newRatingCircle.innerHTML.includes('.')) {
-        _this.editRating(index, parseInt(_elements2.default.ratingSlider.value));
-      }
-    };
-  }
-
+    _model2.default.editMovie(genres, rating, title);
+    _view2.default.changeMovieHTML();
+  });
 };
 
-},{"./elements.js":2,"./helpers.js":3,"./model.js":5,"./view.js":7}],2:[function(require,module,exports){
+var _model = require('./model');
+
+var _model2 = _interopRequireDefault(_model);
+
+var _elements = require('./elements');
+
+var _elements2 = _interopRequireDefault(_elements);
+
+var _view = require('./view');
+
+var _view2 = _interopRequireDefault(_view);
+
+var _helpers = require('./helpers');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+},{"./elements":2,"./helpers":3,"./model":5,"./view":7}],2:[function(require,module,exports){
 'use strict';
 
 // Module that contains all the html elemetns
@@ -248,6 +216,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.getAverage = getAverage;
 exports.Movie = Movie;
+exports.bindEvent = bindEvent;
 //jshint esversion:6
 function getAverage(arr) {
   var sum = 0;
@@ -271,28 +240,27 @@ function Movie(title, year, genres, image) {
   this.image = image || 'dist/pics/movie-placeholder.svg';
 }
 
+function bindEvent(target, callback) {
+  var type = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'click';
+  var capture = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+
+  target.addEventListener(type, callback, !!capture);
+}
+
 },{}],4:[function(require,module,exports){
 'use strict';
 
-var _movies = require('./movies.js');
-
-var _movies2 = _interopRequireDefault(_movies);
-
-var _elements = require('./elements.js');
-
-var _elements2 = _interopRequireDefault(_elements);
-
-var _controller = require('./controller.js');
-
-var _controller2 = _interopRequireDefault(_controller);
-
-var _model = require('./model.js');
+var _model = require('./model');
 
 var _model2 = _interopRequireDefault(_model);
 
-var _view = require('./view.js');
+var _view = require('./view');
 
 var _view2 = _interopRequireDefault(_view);
+
+var _controller = require('./controller');
+
+var _controller2 = _interopRequireDefault(_controller);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -327,48 +295,35 @@ SIMILAR TO A MORE CLASSIC MODULE PATTERN.
 //SOMETIMES DOESN'T LOAD ON FIRST ATTEMPT AND THE USER NEEDS TO REFRESH PAGE
 //HAVE TRIED FIXING THIS BY SHIFITING LOADING ORDER OF SCRIPTS BUT TO NO
 //PERMANENT SOLUTION. WILL FIX IN NEXT DRAFT
-window.onload = function () {
-  if (typeof Storage !== "undefined") {
-    // if(localStorage.getItem("MovieDb") === null) {
+
+if (typeof Storage !== "undefined") {
+  if (localStorage.getItem("0") === null) {
     _model2.default.setInitialDb();
-    // }
   }
-  //INFORMS THE READER IF LOCAL STORAGE IS NOT SUPPORTED
-  else {
-      alert("Sorry! No Web Storage support available. Please consider switching to another browser.");
-    }
-}; //jshint esversion:6
+}
+//INFORMS THE READER IF LOCAL STORAGE IS NOT SUPPORTED
+else {
+    alert("Sorry! No Web Storage support available. Please consider switching to another browser.");
+  } //jshint esversion:6
 
 
 var movieArr = _model2.default.parseMovieArr();
 //CALLS FUNCTION TO RENDER THE INERFACE OF THE APP
 _view2.default.createMovieList(movieArr);
-_controller2.default.sideBarOpener();
+(0, _controller2.default)();
 
-},{"./controller.js":1,"./elements.js":2,"./model.js":5,"./movies.js":6,"./view.js":7}],5:[function(require,module,exports){
+},{"./controller":1,"./model":5,"./view":7}],5:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _movies = require('./movies.js');
+var _movies = require('./movies');
 
 var _movies2 = _interopRequireDefault(_movies);
 
-var _elements = require('./elements.js');
-
-var _elements2 = _interopRequireDefault(_elements);
-
-var _controller = require('./controller.js');
-
-var _controller2 = _interopRequireDefault(_controller);
-
-var _view = require('./view.js');
-
-var _view2 = _interopRequireDefault(_view);
-
-var _helpers = require('./helpers.js');
+var _helpers = require('./helpers');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -376,6 +331,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // import {updateValue} from './watchers.js'
 
 //OBJECT LITERAL THAT CONTAINS APP
+//jshint esversion:6
 exports.default = {
 
   //Sets database first time app is run
@@ -385,10 +341,11 @@ exports.default = {
     });
   },
 
+
   //UPDATES THE LOCALSTORAGE LIST OF MovieDb. CALLED UPON WHENEVER THERE IS A CHANGE
   //WOULD LIKE TO AUTOMATE THIS THROUGH A WATCHER OR OBSERVER OF SOME KIND TO
   //AVOID CONSTANT CALLING. WILL ATTEMPT IN NEXT DRAFT
-  // setMovieDb : function () {
+  // setMovieDb () {
   //   return localStorage.setItem("MovieDb", JSON.stringify(Elements.movieList));
   // },
   //ADDS A NEW MOVIE THROUGH THE CONSTRUCTOR AND PUSHES IT INTO THE MOVIE ARRAY
@@ -399,11 +356,29 @@ exports.default = {
     localStorage.setItem(index, JSON.stringify(movie));
     return index;
   },
+
   //UPDATES MOVIE RATING BASED ON USER INPUT AND
   //PUSHES THE RATING OF THE CHOSEN MOIVE INTO MOVIE ARRAY AND UPDATES LOCAL STORAGE.
   //CREATES A VISUAL EFFECT IN THE MODAL WHEN RATING IS UPDATED
   //BINDS INNERHTML OF TABLE AND MODAL COMPONENT SO THAT A FUNCTION IS NOT NEEDED TO RENDER
-  editMovie: function editMovie(genres, rating) {},
+  editMovie: function editMovie(genres, rating, title) {
+    for (var key in localStorage) {
+      var movie = JSON.parse(localStorage[key]);
+      if (movie.title === title) {
+        movie.genres = genres;
+        if (rating !== undefined) {
+          movie.ratings.push(rating);
+        }
+        return localStorage.setItem(key, JSON.stringify(movie));
+      }
+    }
+    var movieArr = this.parseMovieArr();
+    var index = movieArr.map(function (movie) {
+      if (movie.title === title) {
+        return movie;
+      }
+    });
+  },
   editGenre: function editGenre(index, newVal) {
     var movie = JSON.parse(localStorage[index]);
     movie.genres = newVal;
@@ -414,6 +389,7 @@ exports.default = {
     movie.ratings.push(newVal);
     return localStorage.setItem(JSON.stringify(index), JSON.stringify(movie));
   },
+
   //CALCULATE AVERAGE RATING OF RATING ARRAY FOR DISPLAY PURPOSES
   //ALSO SETS A STANDARD VALUE OF N/A IF NO RATING IS FOUND
   parseMovieArr: function parseMovieArr() {
@@ -423,6 +399,7 @@ exports.default = {
     }
     return movieArr;
   },
+
   //CHECKS FOR TOP RATED MOVIE BY COMPARING EACH MOVIE'S RATING AND SORTING
   //ACCORDINGLY.
   //PREVENTS MovieDb WITH ONE OR LESS RATING TO BE DISPLAYED
@@ -436,6 +413,7 @@ exports.default = {
     });
     return topRated;
   },
+
   //BASICALLY THE SAME FUNCTION AS ABOVE, JUST WITH A REVERSED SORTING ORDER
   getWorstRatedMovie: function getWorstRatedMovie() {
     var movieArr = this.parseMovieArr();
@@ -447,13 +425,16 @@ exports.default = {
     });
     return worstRated;
   },
+
   //FINDS MovieDb THAT MATCHES THE SELECTED YEAR AND HIDES THE OTHERS
   getMoviesThisYear: function getMoviesThisYear(movieYear) {
     var movieArr = this.parseMovieArr();
+    console.log(movieArr);
     return movieArr.filter(function (movie, index) {
       return movie.year === parseInt(movieYear);
     });
   },
+
   //VERY SIMILIAR TO THE ABOVE FILTER FUNCTION, JUST A SLIGHT CHANGE IN SYNTAX
   //AS GENRES PROP IS AN ARRAY THAT CAN CONTAIN MULTIPLE VALUES
   getMoviesByGenre: function getMoviesByGenre(movieGenre) {
@@ -463,10 +444,9 @@ exports.default = {
     });
     return genreArr;
   }
+};
 
-}; //jshint esversion:6
-
-},{"./controller.js":1,"./elements.js":2,"./helpers.js":3,"./movies.js":6,"./view.js":7}],6:[function(require,module,exports){
+},{"./helpers":3,"./movies":6}],6:[function(require,module,exports){
 "use strict";
 
 module.exports = [{
@@ -568,19 +548,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _elements = require('./elements.js');
+var _elements = require('./elements');
 
 var _elements2 = _interopRequireDefault(_elements);
 
-var _controller = require('./controller.js');
-
-var _controller2 = _interopRequireDefault(_controller);
-
-var _model = require('./model.js');
-
-var _model2 = _interopRequireDefault(_model);
-
-var _helpers = require('./helpers.js');
+var _helpers = require('./helpers');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -651,8 +623,9 @@ exports.default = {
     }
   },
 
+
   // Opens sidebar for selected movie
-  openNav: function openNav(index) {
+  openMovieView: function openMovieView(index) {
     _elements2.default.moviePreview.style.width = "600px";
     _elements2.default.modalTitle.innerHTML = _elements2.default.cardMovieTitle[index].innerHTML;
     _elements2.default.modalYear.innerHTML = _elements2.default.cardMovieYear[index].innerHTML;
@@ -662,27 +635,136 @@ exports.default = {
     _elements2.default.ratingCirle.className = 'c100 p' + parseInt(_elements2.default.modalRating.innerHTML) * 10;
   },
 
+
   // Closes sidebar for current movie
-  closeNav: function closeNav() {
+  closeMovieView: function closeMovieView() {
     _elements2.default.moviePreview.style.width = "0";
   },
 
+
   // Displays edit modal for current movie
   editMovieModal: function editMovieModal() {
+    var movieGenres = Array.from(_elements2.default.modalGenres.childNodes);
+    var genreChips = Array.from(_elements2.default.genreEditChip);
     _elements2.default.editModal.classList.add('active');
     _elements2.default.newRatingSpan.innerHTML = _elements2.default.modalRating.innerHTML;
     _elements2.default.newRatingCircle.classList = _elements2.default.ratingCirle.classList;
     _elements2.default.ratingSlider.value = 0;
-    // console.log(Elements.modalGenres.innerHTML);
+
+    // Clears any active states if user has selected genres without submiting them
+    genreChips.forEach(function (chip) {
+      if (chip.classList.contains('active')) chip.classList.remove('active');
+    });
+
+    // Adds active state to current movie's genres
+    movieGenres.forEach(function (genre) {
+      genreChips.map(function (chip) {
+        if (chip.innerHTML === genre.innerHTML) chip.classList.add('active');
+      });
+    });
+  },
+
+
+  // Display new movie genres and rating after editing
+  changeMovieHTML: function changeMovieHTML() {
+    var movieGenres = Array.from(_elements2.default.modalGenres.childNodes);
+    var genreChips = Array.from(_elements2.default.genreEditChip);
+    _elements2.default.editModal.classList.remove('active');
+    _elements2.default.modalGenres.innerHTML = '';
+    genreChips.forEach(function (chip) {
+      if (chip.classList.contains('active')) {
+        _elements2.default.modalGenres.innerHTML += '<label class="chip genre-chip">' + chip.innerHTML + '</label>';
+      }
+    });
+    for (var i = 0; i < _elements2.default.cardMovieTitle.length; i++) {
+      if (_elements2.default.cardMovieTitle[i].innerHTML === _elements2.default.modalTitle.innerHTML) {
+        _elements2.default.cardMovieGenre[i].innerHTML = _elements2.default.modalGenres.innerHTML;
+      }
+    }
+
+    // Rating changes to go here
+  },
+
+
+  // Close current active modal
+  closeActiveModal: function closeActiveModal(i) {
+    _elements2.default.modals[i].classList.remove('active');
+  },
+
+
+  // Display function for top rated and worst rated
+  displayMovie: function displayMovie(movie) {
+    var titleCardArr = Array.from(_elements2.default.cardMovieTitle);
+    titleCardArr.filter(function (title, i) {
+      return movie.title === title.innerHTML ? _elements2.default.movieCardContainer[i].style.display = "block" : _elements2.default.movieCardContainer[i].style.display = "none";
+    });
+  },
+
+  // Display function used to display by genre or year
+  displayMovies: function displayMovies(arr) {
+    var titleCardArr = Array.from(_elements2.default.cardMovieTitle);
+    var movieTitleArr = arr.map(function (movie) {
+      return movie.title;
+    });
+    titleCardArr.filter(function (title, i) {
+      return movieTitleArr.includes(title.innerHTML) ? _elements2.default.movieCardContainer[i].style.display = "block" : _elements2.default.movieCardContainer[i].style.display = "none";
+    });
+  },
+
+
+  // Display movie modal for adding movie
+  displayNewMovieModal: function displayNewMovieModal() {
+    _elements2.default.newMovieModal.classList.add('active');
+    _elements2.default.movieTitle.focus();
+    _elements2.default.movieTitle.select();
+  },
+
+
+  // Visually changes rating circle as slider value changes
+  displayRating: function displayRating() {
+    _elements2.default.newRatingSpan.innerHTML = this.value;
+    _elements2.default.newRatingCircle.className = 'c100 p' + this.value * 10;
+  },
+
+  // Shows input field for year search
+  displayYearInput: function displayYearInput() {
+    var _this = this;
+
+    _elements2.default.movieYearInput.classList.remove('hide');
+    _elements2.default.movieYearInput.focus();
+    _elements2.default.movieYearInput.select();
+    (0, _helpers.bindEvent)(document.body, function (e) {
+      if (e.target !== _this) {
+        _elements2.default.movieYearInput.classList.add('hide');
+      }
+    });
+  },
+
+
+  // Display all movie cards
+  displayAllMovies: function displayAllMovies() {
+    var movieCardArr = Array.from(_elements2.default.movieCardContainer);
+    return movieCardArr.forEach(function (card) {
+      return card.style.display = "block";
+    });
+  },
+
+
+  //Prevents blank space as first character in all input fields
+  blockWhiteSpace: function blockWhiteSpace() {
     var _iteratorNormalCompletion3 = true;
     var _didIteratorError3 = false;
     var _iteratorError3 = undefined;
 
     try {
-      for (var _iterator3 = _elements2.default.modalGenres.childNodes[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-        var childNode = _step3.value;
+      for (var _iterator3 = _elements2.default.inputs[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+        var input = _step3.value;
 
-        console.log(childNode.innerHTML);
+        input.addEventListener("keydown", function (event) {
+          if (event.which === 32 && event.target.selectionStart === 0) {
+            event.preventDefault();
+          }
+        });
       }
     } catch (err) {
       _didIteratorError3 = true;
@@ -698,25 +780,31 @@ exports.default = {
         }
       }
     }
+  },
 
-    var childNodeArr = [];
-    // console.log(childNodeArr);
+
+  // Renders HTML for new movie
+  renderNewMovie: function renderNewMovie(newMovie, i) {
+    var movieCard = document.createElement('div');
+    movieCard.setAttribute('class', 'column col-3 movie-card-container');
+    movieCard.innerHTML = '<div class="card">\n          <div class="card-image">\n            <img class="img-responsive card-movie-cover">\n          </div>\n          <div class="card-header">\n            <h4 class="card-title card-movie-title"></h4>\n            <h6 class="card-meta card-movie-year"></h6>\n          </div>\n          <div class="card-body card-movie-genre"></div>\n          <div class="card-footer">\n            <div class="bar">\n              <div class="bar-item card-movie-rating"></div>\n            </div>\n          </div>\n      </div>\n    </div>';
+
+    _elements2.default.cardContainer.appendChild(movieCard);
+
+    _elements2.default.cardMovieCover[i].src = newMovie.image || 'dist/pics/movie-placeholder.svg';
+    _elements2.default.cardMovieTitle[i].innerHTML = newMovie.title;
+    _elements2.default.cardMovieYear[i].innerHTML = newMovie.year;
+    _elements2.default.cardMovieRating[i].style.width = (0, _helpers.getAverage)(newMovie.ratings) * 10 + '%';
+    _elements2.default.cardMovieRating[i].innerHTML = '' + (0, _helpers.getAverage)(newMovie.ratings);
     var _iteratorNormalCompletion4 = true;
     var _didIteratorError4 = false;
     var _iteratorError4 = undefined;
 
     try {
-      for (var _iterator4 = _elements2.default.genreContainer.childNodes[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-        var node = _step4.value;
+      for (var _iterator4 = newMovie.genres[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+        var genre = _step4.value;
 
-        if (node.innerHTML !== undefined) {
-          console.log(node.innerHTML);
-        }
-        // for (let editChip of Elements.genreEditChip) {
-        //   if (genreChip. === editChip.innerHTML.trim()) {
-        //     editChip.classList.add('active');
-        //     }
-        //   }
+        _elements2.default.cardMovieGenre[i].innerHTML += '<label class="chip">' + genre + '</label>';
       }
     } catch (err) {
       _didIteratorError4 = true;
@@ -732,120 +820,10 @@ exports.default = {
         }
       }
     }
-  },
 
-  // Close current active modal
-  closeActiveModal: function closeActiveModal(i) {
-    _elements2.default.modals[i].classList.remove('active');
-  },
-  // Display function for top rated and worst rated
-  displayMovie: function displayMovie(movie) {
-    var titleCardArr = Array.from(_elements2.default.cardMovieTitle);
-    titleCardArr.filter(function (title, i) {
-      return movie.title === title.innerHTML ? _elements2.default.movieCardContainer[i].style.display = "block" : _elements2.default.movieCardContainer[i].style.display = "none";
-    });
-  },
-  // Display function used to display by genre or year
-  displayMovies: function displayMovies(arr) {
-    var titleCardArr = Array.from(_elements2.default.cardMovieTitle);
-    var movieTitleArr = arr.map(function (movie) {
-      return movie.title;
-    });
-    titleCardArr.filter(function (title, i) {
-      return movieTitleArr.includes(title.innerHTML) ? _elements2.default.movieCardContainer[i].style.display = "block" : _elements2.default.movieCardContainer[i].style.display = "none";
-    });
-  },
-
-  //Display movie modal for adding movie
-  displayNewMovieModal: function displayNewMovieModal() {
-    _elements2.default.newMovieModal.classList.add('active');
-  },
-
-  // Visually changes rating circle as slider value changes
-  displayRating: function () {
-    _elements2.default.ratingSlider.oninput = function () {
-      _elements2.default.newRatingSpan.innerHTML = this.value;
-      _elements2.default.newRatingCircle.className = 'c100 p' + this.value * 10;
-    };
-  }(),
-  // Shows input field for year search
-  displayYearInput: function displayYearInput() {
-    _elements2.default.movieYearInput.classList.remove('hide');
-    _elements2.default.movieYearInput.focus();
-    _elements2.default.movieYearInput.select();
-  },
-  displayAllMovies: function displayAllMovies() {
-    var movieCardArr = Array.from(_elements2.default.movieCardContainer);
-    return movieCardArr.forEach(function (card) {
-      return card.style.display = "block";
-    });
-  },
-  //Prevents blank space as first character in all input fields
-  blockWhiteSpace: function () {
-    var _iteratorNormalCompletion5 = true;
-    var _didIteratorError5 = false;
-    var _iteratorError5 = undefined;
-
-    try {
-      for (var _iterator5 = _elements2.default.inputs[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
-        var input = _step5.value;
-
-        input.addEventListener("keydown", function (event) {
-          if (event.which === 32 && event.target.selectionStart === 0) {
-            event.preventDefault();
-          }
-        });
-      }
-    } catch (err) {
-      _didIteratorError5 = true;
-      _iteratorError5 = err;
-    } finally {
-      try {
-        if (!_iteratorNormalCompletion5 && _iterator5.return) {
-          _iterator5.return();
-        }
-      } finally {
-        if (_didIteratorError5) {
-          throw _iteratorError5;
-        }
-      }
-    }
-  }(),
-  // Renders HTML for new movie
-  displayNewMovie: function displayNewMovie(newMovie, i) {
     _elements2.default.newMovieModal.classList.remove('active');
-    _elements2.default.cardContainer.innerHTML += '<div class="column col-3 movie-card-container">\n       <div class="card">\n          <div class="card-image">\n            <img class="img-responsive card-movie-cover">\n          </div>\n          <div class="card-header">\n            <h4 class="card-title card-movie-title"></h4>\n            <h6 class="card-meta card-movie-year"></h6>\n          </div>\n          <div class="card-body card-movie-genre"></div>\n          <div class="card-footer">\n            <div class="bar">\n              <div class="bar-item card-movie-rating"></div>\n            </div>\n          </div>\n      </div>\n    </div>';
-
-    _elements2.default.cardMovieCover[i].src = newMovie.image || 'dist/pics/movie-placeholder.svg';
-    _elements2.default.cardMovieTitle[i].innerHTML = newMovie.title;
-    _elements2.default.cardMovieYear[i].innerHTML = newMovie.year;
-    _elements2.default.cardMovieRating[i].style.width = (0, _helpers.getAverage)(newMovie.ratings) * 10 + '%';
-    _elements2.default.cardMovieRating[i].innerHTML = '' + (0, _helpers.getAverage)(newMovie.ratings);
-    var _iteratorNormalCompletion6 = true;
-    var _didIteratorError6 = false;
-    var _iteratorError6 = undefined;
-
-    try {
-      for (var _iterator6 = newMovie.genres[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
-        var genre = _step6.value;
-
-        _elements2.default.cardMovieGenre[i].innerHTML += '<label class="chip">' + genre + '</label>';
-      }
-    } catch (err) {
-      _didIteratorError6 = true;
-      _iteratorError6 = err;
-    } finally {
-      try {
-        if (!_iteratorNormalCompletion6 && _iterator6.return) {
-          _iterator6.return();
-        }
-      } finally {
-        if (_didIteratorError6) {
-          throw _iteratorError6;
-        }
-      }
-    }
   },
+
 
   // Previews genres for user when editing movie
   previewGenres: function previewGenres(genre) {
@@ -855,9 +833,8 @@ exports.default = {
       genre.classList.remove('active');
     }
   }
-
 };
 
-},{"./controller.js":1,"./elements.js":2,"./helpers.js":3,"./model.js":5}]},{},[4])
+},{"./elements":2,"./helpers":3}]},{},[4])
 
 //# sourceMappingURL=bundle.js.map
