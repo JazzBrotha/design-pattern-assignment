@@ -47,8 +47,8 @@ input[type="checkbox"]:checked + label {
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 0;
   box-shadow: none;
+  display: none;
 }
 
 
@@ -57,11 +57,10 @@ input[type="checkbox"]:checked + label {
   /* Critical position and size styles */
   min-width: 100%;
   min-height: 100%;
-  background-color: white; /* Needs a background or else the nav will show through */
   position: relative;
   top: 0;
   bottom: 100%;
-  left: 0;
+  left: 20px;
   z-index: 1;
 
   /* non-critical apperance styles */
@@ -78,32 +77,41 @@ input[type="checkbox"]:checked + label {
 label[for="nav-trigger"] {
   /* critical positioning styles */
   position: fixed;
-  left: 15px; top: 15px;
+  left: 25px;
+  top: 15px;
   z-index: 2;
 
   /* non-critical apperance styles */
   height: 30px;
   width: 30px;
   cursor: pointer;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' x='0px' y='0px' width='30px' height='30px' viewBox='0 0 30 30' enable-background='new 0 0 30 30' xml:space='preserve'><rect width='30' height='6'/><rect y='24' width='30' height='6'/><rect y='12' width='30' height='6'/></svg>");
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' width='30px' height='30px' viewBox='0 0 30 30' ><rect width='30' height='6'/><rect y='24' width='30' height='6'/><rect y='12' width='30' height='6'/></svg>");
   background-size: contain;
 }
 
-/* Make the Magic Happen */
+.menu-text {
+  display: block;
+  position: absolute;
+  margin-top: 40px;
+  left: -4px;
+
+}
+
 .nav-trigger + label, .site-wrap {
   transition: left 0.2s;
 }
 
 .nav-trigger:checked + label {
-  left: 315px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' width='30' height='30' viewBox='0 0 40 40'><path stroke='black' fill='transparent' stroke-linecap='round' stroke-width='5' d='M 10,10 L 30,30 M 30,10 L 10,30'/></svg>");
+    left: 315px;
 }
 
 .nav-trigger:checked ~ .site-wrap {
   left: 300px;
 }
 .nav-trigger:checked ~ .navigation {
-  z-index: 2;
   transition: ease 0.2s all;
+  display: block;
   box-shadow: 0 0.1rem 0.4rem rgba(0,0,0,.3);
 }
 
@@ -145,8 +153,6 @@ html, body {
     text-decoration: none;
 }
 
-
-//
 
 .btn-xl {
   height: 8rem;
@@ -223,4 +229,12 @@ font-size: 1.3rem
 
 .bar-item {
   background-color: #818BD5
+}
+
+.tile.tile-centered.tile-meta.tile-meta-wrap {
+  white-space: normal;
+}
+
+.tab-item-disabled a {
+  color: #999 !important;
 }

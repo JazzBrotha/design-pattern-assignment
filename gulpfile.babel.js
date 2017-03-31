@@ -1,11 +1,13 @@
-import critical from 'critical';
-import babelify from 'babelify';
-import browserSync from 'browser-sync';
-import browserify from 'browserify';
-import buffer from 'vinyl-buffer';
-import gulp from 'gulp';
-import plugins from 'gulp-load-plugins';
-import source from 'vinyl-source-stream';
+import critical from 'critical'
+import babelify from 'babelify'
+import browserSync from 'browser-sync'
+import browserify from 'browserify'
+import buffer from 'vinyl-buffer'
+import gulp from 'gulp'
+import plugins from 'gulp-load-plugins'
+import source from 'vinyl-source-stream'
+import sass from 'gulp-sass'
+import autoprefixer from 'gulp-autoprefixer'
 
 
 /* ----------------- */
@@ -14,7 +16,9 @@ import source from 'vinyl-source-stream';
 
 gulp.task('development', ['scripts', 'styles'], () => {
     browserSync({
+      'browser': ['google-chrome'],
         'server': './',
+        'port': 8000,
         'snippetOptions': {
             'rule': {
                 'match': /<\/body>/i,
@@ -72,6 +76,7 @@ gulp.task('styles', () => {
         .pipe(plugins().sourcemaps.init())
         .pipe(plugins().sass().on('error', plugins().sass.logError))
         .pipe(plugins().sourcemaps.write())
+        .pipe(autoprefixer())
         .pipe(gulp.dest('./dist/css/'))
         .pipe(browserSync.stream());
 });
@@ -84,13 +89,13 @@ gulp.task('styles', () => {
 gulp.task('html', ['cssmin'], () => {
     return gulp.src('index.html')
         .pipe(critical.stream({
-            'base': 'build/',
+            'base': './src/scss',
             'inline': true,
             'extract': true,
             'minify': true,
             'css': ['./dist/css/style.css']
         }))
-        .pipe(gulp.dest('build'));
+        .pipe(gulp.dest('./src/scss'));
 });
 
 

@@ -1,5 +1,3 @@
-// Module that contains all the html elemetns
-// This way. whenever a variable is declared in our app we know that is does not reference a html element
 module.exports = {
     allMoviesLink : document.getElementById('all-movies-link'),
     cardBody : document.getElementsByClassName('card-body'),
@@ -16,10 +14,10 @@ module.exports = {
     genreChip : document.getElementsByClassName('genre-chip'),
     genreContainer : document.getElementById('genre-container'),
     genreEditChip : document.getElementsByClassName('genre-edit-chip'),
-    genreLabelCount : document.getElementsByClassName('genre-label-count'),
+    // genreLabelCount : document.getElementsByClassName('genre-label-count'),
     genreLinkName : document.getElementsByClassName('genre-link-name'),
     // genreSuccess : document.getElementById('genre-success'),
-    inputs : document.querySelectorAll('input'),
+    inputs : document.getElementsByTagName('input'),
     listGenre : document.getElementsByClassName('list-genre'),
     listRating : document.getElementsByClassName('list-rating'),
     modalCloseButton : document.getElementsByClassName('modal-close-button'),
