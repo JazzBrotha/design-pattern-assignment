@@ -1,7 +1,7 @@
 # moive-db
 Small movie database that allows user to filter movies based on genre or year as well as edit and add movies.
 
-This project is live on: https://jazzbrotha.github.io/movie-db/
+This project is live on: https://jazzbrotha.github.io/movie-db
 
 Note: No current mobile or tablet support
 
@@ -21,4 +21,4 @@ Note: No current mobile or tablet support
 Tested in Firefox and Chrome. Other browsers must support `localStorage`.
 
 ## License
-MIT License
+[MIT License](https://github.com/JazzBrotha/movie-db/blob/master/LICENSE)
