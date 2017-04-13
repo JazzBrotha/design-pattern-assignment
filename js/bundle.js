@@ -27,6 +27,7 @@ exports.default = function () {
         (0, _helpers.bindEvent)(_elements2.default.movieCardContainer[index], function () {
             _view2.default.openMovieView(index);
         });
+        _view2.default.displaySuccessMessage();
         _view2.default.displayAllMovies();
     }, 'submit');
 
@@ -202,7 +203,9 @@ module.exports = {
     ratingModal: document.getElementById('rating-modal'),
     ratingSlider: document.getElementById('rating-slider'),
     ratingSort: document.getElementById('rating-sort'),
+    mainWrapper: document.getElementById('main-wrapper'),
     submitEditButton: document.getElementById('submit-edit-button'),
+    successMessage: document.getElementById('success-message'),
     titleSort: document.getElementById('title-sort'),
     topRatedLink: document.getElementById('top-rated-link'),
     worstRatedLink: document.getElementById('worst-rated-link'),
@@ -233,7 +236,7 @@ var SPACE_BAR = 32;
 
 function getAverage(arr) {
     var sum = 0;
-    if (arr.length !== 0) {
+    if (arr.length > 1) {
         for (var i = 0; i < arr.length; i++) {
             sum += arr[i];
         }
@@ -372,7 +375,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = {
 
-    //Sets database first time app is run
+    // Sets database first time app is run
     setInitialDb: function setInitialDb() {
         _movies2.default.forEach(function (movie, index) {
             localStorage.setItem(index, JSON.stringify(movie));
@@ -420,7 +423,7 @@ exports.default = {
     getMoviesThisYear: function getMoviesThisYear(movieYear) {
         var movieArr = (0, _helpers.parseMovies)();
         return movieArr.filter(function (movie, index) {
-            return movie.year === movieYear;
+            return movie.year == movieYear;
         });
     },
     getMoviesByGenre: function getMoviesByGenre(movieGenre) {
@@ -2469,6 +2472,13 @@ exports.default = {
         _elements2.default.newRatingSpan.innerHTML = this.value;
         _elements2.default.newRatingCircle.className = 'c100 p' + this.value * 10 + ' centered';
     },
+    displaySuccessMessage: function displaySuccessMessage() {
+        _elements2.default.successMessage.classList.remove('hide');
+        setTimeout(function () {
+            _elements2.default.successMessage.classList.add('hide');
+            _elements2.default.newMovieModal.classList.remove('active');
+        }, 3000);
+    },
 
     // Shows input field for year search
     displayYearInput: function displayYearInput() {
@@ -2501,11 +2511,9 @@ exports.default = {
 
         _elements2.default.cardContainer.appendChild(movieCard);
 
-        _elements2.default.cardMovieCover[i].src = newMovie.image || 'dist/pics/movie-placeholder.svg';
+        _elements2.default.cardMovieCover[i].src = newMovie.posterurl || 'dist/pics/movie-placeholder.svg';
         _elements2.default.cardMovieTitle[i].innerHTML = newMovie.title;
         _elements2.default.cardMovieYear[i].innerHTML = newMovie.year;
-        _elements2.default.cardMovieRating[i].style.width = (0, _helpers.getAverage)(newMovie.ratings) * 10 + '%';
-        _elements2.default.cardMovieRating[i].innerHTML = '' + (0, _helpers.getAverage)(newMovie.ratings);
         var _iteratorNormalCompletion3 = true;
         var _didIteratorError3 = false;
         var _iteratorError3 = undefined;
@@ -2530,8 +2538,6 @@ exports.default = {
                 }
             }
         }
-
-        _elements2.default.newMovieModal.classList.remove('active');
     },
 
 
