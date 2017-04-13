@@ -37,7 +37,11 @@ export default {
         for (let i = 0; i < movieArr.length; i++) {
             Elements.cardMovieCover[i].src = movieArr[i].posterurl;
             checkMovieImage(i);
-            Elements.cardMovieTitle[i].innerHTML = movieArr[i].title;
+            if (movieArr[i].hasOwnProperty('originalTitle') && movieArr[i].originalTitle.length !== 0) {
+              Elements.cardMovieTitle[i].innerHTML = movieArr[i].originalTitle;
+            } else {
+              Elements.cardMovieTitle[i].innerHTML = movieArr[i].title;
+            }
             Elements.cardMovieYear[i].innerHTML = movieArr[i].year;
             Elements.cardMovieRating[i].style.width = `${getAverage(movieArr[i].ratings)* 10}%`;
             Elements.cardMovieRating[i].innerHTML = `${getAverage(movieArr[i].ratings)}`;
@@ -58,9 +62,12 @@ export default {
         Elements.modalRating.innerHTML = Elements.cardMovieRating[index].innerHTML;
         Elements.ratingCirle.className = `c100 p${parseInt(Elements.modalRating.innerHTML) * 10} centered`;
         Elements.modalMoviePlot.innerHTML = movies[index].storyline;
+        Elements.modalMovieCast.innerHTML = '';
+        if (movies[index].actors.length > 0) {
         movies[index].actors.forEach(actor => {
           Elements.modalMovieCast.innerHTML += `<p class="tile-title">${actor}</p>`;
         });
+        }
     },
 
     // Closes sidebar for current movie

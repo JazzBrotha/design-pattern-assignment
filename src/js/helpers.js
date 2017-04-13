@@ -14,12 +14,14 @@ export function getAverage(arr) {
     }
 }
 
-export function Movie(title, year, genres, image) {
+export function Movie(title, year, genres, posterurl) {
     this.title = title;
     this.year = year;
     this.genres = genres;
     this.ratings = [];
-    this.image = image || 'dist/pics/movie-placeholder.svg';
+    this.posterurl = posterurl || 'dist/pics/movie-placeholder.svg';
+    this.storyline = '';
+    this.actors = '';
 }
 
 export function bindEvent(target, callback, type = 'click', capture = false) {
@@ -40,8 +42,8 @@ export function parseMovies() {
 
 export function getMovieIndex(title) {
     let movieArr = parseMovies();
-    let movie = movieArr.reduce((c, p) =>
-        c.title === title ? c : p
+    let movie = movieArr.reduce((p, c) =>
+      p.title === title || p.originalTitle === title ? p : c
     );
     let movieIndex = movieArr.indexOf(movie);
     return movieIndex;
