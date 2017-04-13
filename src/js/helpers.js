@@ -64,5 +64,5 @@ export function checkMovieImage(index) {
         if (Elements.cardMovieCover[index].height < 1) {
             Elements.cardMovieCover[index].src = 'dist/pics/movie-placeholder.svg';
         }
-    }, 2000);
+    }, 5000);
 }

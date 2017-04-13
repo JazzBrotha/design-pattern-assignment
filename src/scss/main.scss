@@ -138,7 +138,7 @@ html, body {
     background-color: white;
 }
 
-.p-1 {
+.p-2 {
   padding: 2rem;
 }
 
@@ -225,6 +225,20 @@ font-size: 1.3rem
 
 .card {
   cursor: pointer;
+}
+
+.card-movie-cover {
+  width: 275px;
+  height: 400px;
+}
+
+.tile .tile-subtitle {
+    color: rgb(153, 153, 153);
+    line-height: 2rem;
+}
+
+.movie-cover-full {
+  width: 100%;
 }
 
 .bar-item {

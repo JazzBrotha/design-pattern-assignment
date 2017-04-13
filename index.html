@@ -326,112 +326,50 @@
 
     <div id="mySidenav" class="sidenav">
         <a id="close-movie-button" class="closebtn">&times;</a>
-        <img class="img-responsive" id="modal-movie-poster" alt="">
+          <img class="img-responsive movie-cover-full" id="modal-movie-poster" alt="">
         <div class="text-center movie-info">
             <h4 class="movie-header" id="modal-movie-title"></h4>
             <h4 class="movie-year" id="modal-movie-year"></h4>
         </div>
+        <div id="rating-circle">
+            <span id="modal-movie-rating"></span>
+            <div class="slice">
+                <div class="bar"></div>
+                <div class="fill"></div>
+            </div>
+        </div>
+        <div class="flex-center" id="modal-movie-genres"></div>
+        <div class="p-2">
+          <button class="btn btn-primary btn-block" id="edit-button">Edit</button>
+        </div>
 
         <div class="columns">
-            <div class="column col-6 col-xs-12">
-                <div class="panel panel-borderless p-2">
-                    <nav class="panel-nav">
-                        <ul class="tab tab-block">
-                            <li class="tab-item active">
-                                <a>
-         Overview
-       </a>
-                            </li>
-                            <li class="tab-item tab-item-disabled">
-                                <a>
-         Plot
-       </a>
-                            </li>
-                        </ul>
-                    </nav>
-                    <div class="panel-body">
-                        <div class="tile">
-                            <div class="tile-content">
-                                <div id="rating-circle">
-                                    <span id="modal-movie-rating"></span>
-                                    <div class="slice">
-                                        <div class="bar"></div>
-                                        <div class="fill"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tile-action">
-                                <button class="btn btn-link btn-action btn-lg"></button>
-                            </div>
-                        </div>
-                        <div class="tile tile-centere">
-                            <div class="tile-content">
-                                <div class="tile-meta tile-meta-wrap" id="modal-movie-genres"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel-footer">
-                        <button class="btn btn-primary btn-block" id="edit-button">Edit</button>
-                    </div>
-                </div>
-            </div>
-            <div class="column col-6 col-xs-12">
+            <div class="column col-7 col-xs-12">
                 <div class="panel panel-borderless">
-                    <div class="text-normal mt-3 text-center">Cast</div>
-                    <div class="divider"></div>
-                    <div class="centered">
-                        <span class="label label-danger">Not available</span>
-                    </div>
-                    <!-- <div class="divider"></div>
+                <div class="panel-header">
+                  <div class="panel-title">Plot</div>
+                </div>
                 <div class="panel-body">
                   <div class="tile">
-                    <div class="tile-icon">
-                      <figure class="avatar" data-initial="TO">
-                      </figure>
-                    </div>
                     <div class="tile-content">
-                      <p class="tile-title">Thor Odinson</p>
-                    </div>
-                  </div>
-                  <div class="tile">
-                    <div class="tile-icon">
-                      <figure class="avatar" data-initial="BB">
-                      </figure>
-                    </div>
-                    <div class="tile-content">
-                      <p class="tile-title">Bruce Banner</p>
-                    </div>
-                  </div>
-                  <div class="tile">
-                    <div class="tile-icon">
-                      <figure class="avatar" data-initial="TS"></figure>
-                    </div>
-                    <div class="tile-content">
-                      <p class="tile-title">Tony Stark</p>
-                    </div>
-                  </div>
-                  <div class="tile">
-                    <div class="tile-icon">
-                      <figure class="avatar" data-initial="SR">
-                      </figure>
-                    </div>
-                    <div class="tile-content">
-                      <p class="tile-title">Steve Rogers</p>
-                    </div>
-                  </div>
-                  <div class="tile">
-                    <div class="tile-icon">
-                      <figure class="avatar" data-initial="NR">
-                      </figure>
-                    </div>
-                    <div class="tile-content">
-                      <p class="tile-title">Natasha Romanoff</p>
+                      <p class="tile-subtitle" id="modal-movie-plot"></p>
                     </div>
                   </div>
                 </div>
-                <div class="panel-footer">
-                </div> -->
+              </div>
+            </div>
+            <div class="column col-5 col-xs-12">
+                <div class="panel panel-borderless">
+                <div class="panel-header">
+                  <div class="panel-title">Cast</div>
                 </div>
+                <div class="panel-body">
+                  <div class="tile">
+                    <div class="tile-content" id="modal-movie-cast">
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
         </div>

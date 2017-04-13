@@ -14,7 +14,7 @@ export default {
         Elements.cardContainer.innerHTML = '';
         for (let movie of movieArr) {
             Elements.cardContainer.innerHTML +=
-                `<div class="column col-3 movie-card-container">
+                `<div class="column col-2 movie-card-container">
        <div class="card">
           <div class="card-image">
             <img class="img-responsive card-movie-cover">
@@ -35,10 +35,10 @@ export default {
 
         // Sets values for each movie inside card elements
         for (let i = 0; i < movieArr.length; i++) {
-            Elements.cardMovieCover[i].src = movieArr[i].image;
+            Elements.cardMovieCover[i].src = movieArr[i].posterurl;
             checkMovieImage(i);
             Elements.cardMovieTitle[i].innerHTML = movieArr[i].title;
-            Elements.cardMovieYear[i].innerHTML = movieArr[i].year;
+            Elements.cardMovieYear[i].innerHTML = movieArr[i].releaseDate;
             Elements.cardMovieRating[i].style.width = `${getAverage(movieArr[i].ratings)* 10}%`;
             Elements.cardMovieRating[i].innerHTML = `${getAverage(movieArr[i].ratings)}`;
             for (let genre of movieArr[i].genres) {
@@ -49,13 +49,18 @@ export default {
 
     // Opens sidebar for selected movie
     openMovieView(index) {
-        Elements.moviePreview.style.width = "600px";
+        let movies = parseMovies();
+        Elements.moviePreview.style.width = "450px";
         Elements.modalTitle.innerHTML = Elements.cardMovieTitle[index].innerHTML;
         Elements.modalYear.innerHTML = Elements.cardMovieYear[index].innerHTML;
         Elements.modalPoster.src = Elements.cardMovieCover[index].src;
         Elements.modalGenres.innerHTML = Elements.cardMovieGenre[index].innerHTML;
         Elements.modalRating.innerHTML = Elements.cardMovieRating[index].innerHTML;
         Elements.ratingCirle.className = `c100 p${parseInt(Elements.modalRating.innerHTML) * 10} centered`;
+        Elements.modalMoviePlot.innerHTML = movies[index].storyline;
+        movies[index].actors.forEach(actor => {
+          Elements.modalMovieCast.innerHTML += `<p class="tile-title">${actor}</p>`;
+        });
     },
 
     // Closes sidebar for current movie
@@ -176,7 +181,7 @@ export default {
     // Renders HTML for new movie
     renderNewMovie(newMovie, i) {
         const movieCard = document.createElement('div');
-        movieCard.setAttribute('class', 'column col-3 movie-card-container');
+        movieCard.setAttribute('class', 'column col-2 movie-card-container');
         movieCard.innerHTML = `<div class="card">
           <div class="card-image">
             <img class="img-responsive card-movie-cover">
