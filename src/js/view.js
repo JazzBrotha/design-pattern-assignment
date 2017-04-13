@@ -38,7 +38,7 @@ export default {
             Elements.cardMovieCover[i].src = movieArr[i].posterurl;
             checkMovieImage(i);
             Elements.cardMovieTitle[i].innerHTML = movieArr[i].title;
-            Elements.cardMovieYear[i].innerHTML = movieArr[i].releaseDate;
+            Elements.cardMovieYear[i].innerHTML = movieArr[i].year;
             Elements.cardMovieRating[i].style.width = `${getAverage(movieArr[i].ratings)* 10}%`;
             Elements.cardMovieRating[i].innerHTML = `${getAverage(movieArr[i].ratings)}`;
             for (let genre of movieArr[i].genres) {

@@ -63,7 +63,7 @@ export default {
         let movieArr = parseMovies();
         return movieArr.filter(
             (movie, index) =>
-            movie.year === parseInt(movieYear)
+            movie.year === movieYear
         );
     },
 
