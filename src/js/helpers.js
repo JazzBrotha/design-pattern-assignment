@@ -4,7 +4,7 @@ const SPACE_BAR = 32;
 
 export function getAverage(arr) {
     let sum = 0;
-    if (arr.length !== 0) {
+    if (arr.length > 1) {
         for (let i = 0; i < arr.length; i++) {
             sum += arr[i];
         }
@@ -34,7 +34,6 @@ export function parseMovies() {
 
         // Prevents other values in Firefox to be pushed
         if (typeof localStorage[key] === 'string')
-
             movieArr.push(JSON.parse(localStorage[key]));
     }
     return movieArr;

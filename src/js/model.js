@@ -7,7 +7,7 @@ import {
 
 export default {
 
-    //Sets database first time app is run
+    // Sets database first time app is run
     setInitialDb() {
         MovieDb.forEach((movie, index) => {
             localStorage.setItem(index, JSON.stringify(movie));
@@ -63,7 +63,7 @@ export default {
         let movieArr = parseMovies();
         return movieArr.filter(
             (movie, index) =>
-            movie.year === movieYear
+            movie.year == movieYear
         );
     },
 

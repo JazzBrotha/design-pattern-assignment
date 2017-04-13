@@ -166,6 +166,16 @@ export default {
         Elements.newRatingSpan.innerHTML = this.value;
         Elements.newRatingCircle.className = `c100 p${this.value * 10} centered`;
     },
+
+    displaySuccessMessage() {
+      Elements.successMessage.classList.remove('hide');
+        setTimeout(function() {
+          Elements.successMessage.classList.add('hide');
+          Elements.newMovieModal.classList.remove('active');
+      }, 3000);
+
+
+    },
     // Shows input field for year search
     displayYearInput() {
         Elements.movieYearInput.classList.remove('hide');
@@ -208,16 +218,12 @@ export default {
 
         Elements.cardContainer.appendChild(movieCard);
 
-        Elements.cardMovieCover[i].src = newMovie.image || 'dist/pics/movie-placeholder.svg';
+        Elements.cardMovieCover[i].src = newMovie.posterurl || 'dist/pics/movie-placeholder.svg';
         Elements.cardMovieTitle[i].innerHTML = newMovie.title;
         Elements.cardMovieYear[i].innerHTML = newMovie.year;
-        Elements.cardMovieRating[i].style.width = `${getAverage(newMovie.ratings)* 10}%`;
-        Elements.cardMovieRating[i].innerHTML = `${getAverage(newMovie.ratings)}`;
         for (let genre of newMovie.genres) {
             Elements.cardMovieGenre[i].innerHTML += `<label class="chip">${genre}</label>`;
         }
-
-        Elements.newMovieModal.classList.remove('active');
     },
 
     // Previews genres for user when editing movie

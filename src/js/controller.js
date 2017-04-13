@@ -31,6 +31,7 @@ export default function() {
         bindEvent(Elements.movieCardContainer[index], function() {
             View.openMovieView(index);
         });
+        View.displaySuccessMessage();
         View.displayAllMovies();
     }, 'submit');
 

@@ -22,3 +22,6 @@ Tested in Firefox and Chrome. Other browsers must support `localStorage`.
 
 ## License
 MIT License
+
+
+OBS! Plots and actors not displaying correctly. Rating bar is bugged when adding new movie. Year search is bugged.
