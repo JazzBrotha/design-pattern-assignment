@@ -7,14 +7,15 @@ import gulp from 'gulp'
 import plugins from 'gulp-load-plugins'
 import source from 'vinyl-source-stream'
 import sass from 'gulp-sass'
-import autoprefixer from 'gulp-autoprefixer'
+import postcss from 'gulp-postcss'
+import autoprefixer from 'autoprefixer'
+import cssnano from 'cssnano'
+import rename from 'gulp-rename'
+import uglify from 'gulp-uglify'
 
 
-/* ----------------- */
-/* Development
-/* ----------------- */
-
-gulp.task('development', ['scripts', 'styles'], () => {
+// Server
+gulp.task('server', () => {
     browserSync({
       'browser': ['google-chrome'],
         'server': './',
@@ -33,10 +34,7 @@ gulp.task('development', ['scripts', 'styles'], () => {
 });
 
 
-/* ----------------- */
-/* Scripts
-/* ----------------- */
-
+// Scripts
 gulp.task('scripts', () => {
     return browserify({
         'entries': ['./src/js/main.js'],
@@ -59,89 +57,31 @@ gulp.task('scripts', () => {
         this.emit('end');
     })
     .pipe(source('bundle.js'))
+    .pipe(rename({suffix: '.min'}))
     .pipe(buffer())
     .pipe(plugins().sourcemaps.init({'loadMaps': true}))
+    .pipe(uglify())
     .pipe(plugins().sourcemaps.write('.'))
     .pipe(gulp.dest('./dist/js/'))
     .pipe(browserSync.stream());
 });
 
 
-/* ----------------- */
-/* Styles
-/* ----------------- */
-
+// Styles
 gulp.task('styles', () => {
+  const cssPlugins = [
+    autoprefixer({browsers: ['last 2 versions']}),
+    cssnano()
+  ];
     return gulp.src('./src/scss/**/*.scss')
         .pipe(plugins().sourcemaps.init())
         .pipe(plugins().sass().on('error', plugins().sass.logError))
         .pipe(plugins().sourcemaps.write())
-        .pipe(autoprefixer())
+        .pipe(postcss(cssPlugins))
+        .pipe(rename({suffix: '.min'}))
         .pipe(gulp.dest('./dist/css/'))
         .pipe(browserSync.stream());
 });
 
-
-/* ----------------- */
-/* HTML
-/* ----------------- */
-
-gulp.task('html', ['cssmin'], () => {
-    return gulp.src('index.html')
-        .pipe(critical.stream({
-            'base': './src/scss',
-            'inline': true,
-            'extract': true,
-            'minify': true,
-            'css': ['./dist/css/style.css']
-        }))
-        .pipe(gulp.dest('./src/scss'));
-});
-
-
-/* ----------------- */
-/* Cssmin
-/* ----------------- */
-
-gulp.task('cssmin', () => {
-    return gulp.src('./src/scss/**/*.scss')
-        .pipe(plugins().sass({
-            'outputStyle': 'compressed'
-        }).on('error', plugins().sass.logError))
-        .pipe(gulp.dest('./dist/css/'));
-});
-
-
-/* ----------------- */
-/* Jsmin
-/* ----------------- */
-
-gulp.task('jsmin', () => {
-    var envs = plugins().env.set({
-        'NODE_ENV': 'production'
-    });
-
-    return browserify({
-        'entries': ['./src/js/main.js'],
-        'debug': false,
-        'transform': [
-            babelify.configure({
-                'presets': ['es2015']
-            })
-        ]
-    })
-    .bundle()
-    .pipe(source('main.js'))
-    .pipe(envs)
-    .pipe(buffer())
-    .pipe(plugins().uglify())
-    .pipe(envs.reset)
-    .pipe(gulp.dest('./dist/js/'));
-});
-
-/* ----------------- */
-/* Taks
-/* ----------------- */
-
-gulp.task('default', ['development']);
-gulp.task('deploy', ['html', 'jsmin']);
+// Tasks
+gulp.task('default', ['server', 'scripts', 'styles']);

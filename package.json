@@ -1,14 +1,10 @@
 {
-  "name": "moviedb",
+  "name": "movie-db",
   "version": "1.0.0",
-  "description": "",
+  "description": "Small movie database that allows user to filter movies based on genre or year as well as edit and add movies.",
   "main": "main.js",
-  "scripts": {
-    "start": "gulp"
-  },
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
+    "autoprefixer": "^6.7.7",
     "babel-core": "^6.7.4",
     "babel-preset-es2015": "^6.9.0",
     "babel-register": "^6.9.0",
@@ -16,18 +12,30 @@
     "browser-sync": "^2.12.10",
     "browserify": "^13.0.1",
     "critical": "^0.7.2",
+    "cssnano": "^3.10.0",
     "eslint": "^0.18.0",
     "eslint-loader": "^0.9.0",
     "gulp": "^3.9.1",
-    "gulp-autoprefixer": "^3.1.1",
     "gulp-babel": "^6.1.2",
     "gulp-env": "^0.4.0",
     "gulp-load-plugins": "^1.2.4",
     "gulp-notify": "^2.2.0",
+    "gulp-postcss": "^6.4.0",
+    "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.3.1",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-uglify": "^1.5.3",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JazzBrotha/design-pattern-assignment.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JazzBrotha/design-pattern-assignment/issues"
+  },
+  "homepage": "https://github.com/JazzBrotha/design-pattern-assignment#readme"
 }
