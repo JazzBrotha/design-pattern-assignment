@@ -3,6 +3,8 @@ Small movie database that allows user to filter movies based on genre or year as
 
 Note: Not currently optimized for mobile or tablet.
 
+[Live](https://jazzbrotha.github.io/movie-db)
+
 ## 1.1 Features/Fixes
 * Added cast for movies
 * Added plot for movies
@@ -28,4 +30,4 @@ Note: Not currently optimized for mobile or tablet.
 Other browsers must support `localStorage`.
 
 ## License
-MIT License
+[MIT License](https://github.com/JazzBrotha/movie-db/blob/master/LICENSE)
