@@ -13,7 +13,6 @@ import cssnano from 'cssnano'
 import rename from 'gulp-rename'
 import uglify from 'gulp-uglify'
 
-
 // Server
 gulp.task('server', () => {
     browserSync({
@@ -32,7 +31,6 @@ gulp.task('server', () => {
     gulp.watch('./src/js/**/*.js', ['scripts']);
     gulp.watch('./*.html', browserSync.reload);
 });
-
 
 // Scripts
 gulp.task('scripts', () => {

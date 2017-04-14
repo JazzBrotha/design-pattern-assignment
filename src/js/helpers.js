@@ -16,6 +16,7 @@ export function getAverage(arr) {
 
 export function Movie(title, year, genres, posterurl) {
     this.title = title;
+    this.originalTitle = '';
     this.year = year;
     this.genres = genres;
     this.ratings = [];

@@ -4,7 +4,8 @@ import {
     getAverage,
     bindEvent,
     parseMovies,
-    checkMovieImage
+    checkMovieImage,
+    getMovieIndex
 } from './helpers'
 
 
@@ -52,21 +53,22 @@ export default {
     },
 
     // Opens sidebar for selected movie
-    openMovieView(index) {
+    openMovieView(cardIndex) {
+        let movieIndex = getMovieIndex(Elements.cardMovieTitle[cardIndex].innerHTML);
         let movies = parseMovies();
         Elements.moviePreview.style.width = "450px";
-        Elements.modalTitle.innerHTML = Elements.cardMovieTitle[index].innerHTML;
-        Elements.modalYear.innerHTML = Elements.cardMovieYear[index].innerHTML;
-        Elements.modalPoster.src = Elements.cardMovieCover[index].src;
-        Elements.modalGenres.innerHTML = Elements.cardMovieGenre[index].innerHTML;
-        Elements.modalRating.innerHTML = Elements.cardMovieRating[index].innerHTML;
+        Elements.modalTitle.innerHTML = Elements.cardMovieTitle[cardIndex].innerHTML;
+        Elements.modalYear.innerHTML = Elements.cardMovieYear[cardIndex].innerHTML;
+        Elements.modalPoster.src = Elements.cardMovieCover[cardIndex].src;
+        Elements.modalGenres.innerHTML = Elements.cardMovieGenre[cardIndex].innerHTML;
+        Elements.modalRating.innerHTML = Elements.cardMovieRating[cardIndex].innerHTML;
         Elements.ratingCirle.className = `c100 p${parseInt(Elements.modalRating.innerHTML) * 10} centered`;
-        Elements.modalMoviePlot.innerHTML = movies[index].storyline;
+        Elements.modalMoviePlot.innerHTML = movies[movieIndex].storyline;
         Elements.modalMovieCast.innerHTML = '';
-        if (movies[index].actors.length > 0) {
-        movies[index].actors.forEach(actor => {
-          Elements.modalMovieCast.innerHTML += `<p class="tile-title">${actor}</p>`;
-        });
+        if (movies[movieIndex].actors.length > 0) {
+          movies[movieIndex].actors.forEach(actor => {
+            Elements.modalMovieCast.innerHTML += `<p class="tile-title">${actor}</p>`;
+          });
         }
     },
 
@@ -136,7 +138,7 @@ export default {
     displayMovie(movie) {
         let titleCardArr = Array.from(Elements.cardMovieTitle);
         titleCardArr.filter((title, i) =>
-            movie.title === title.innerHTML ?
+            movie.title === title.innerHTML || movie.originalTitle === title.innerHTML ?
             Elements.movieCardContainer[i].style.display = "block" :
             Elements.movieCardContainer[i].style.display = "none"
         );
@@ -145,7 +147,7 @@ export default {
     displayMovies(arr) {
         let titleCardArr = Array.from(Elements.cardMovieTitle);
         let movieTitleArr = arr.map(movie =>
-            movie.title
+          movie.originalTitle.length > 1 ? movie.originalTitle : movie.title
         );
         titleCardArr.filter((title, i) =>
             movieTitleArr.includes(title.innerHTML) ?

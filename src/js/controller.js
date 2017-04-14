@@ -25,7 +25,7 @@ export default function() {
     // Handling of new movie
     bindEvent(Elements.movieCreator, function(e) {
         e.preventDefault();
-        let newMovie = new Movie(Elements.movieTitle.value, parseInt(Elements.movieYear.value), Elements.movieGenres.value.split(','), Elements.movieCover.value);
+        let newMovie = new Movie(Elements.movieTitle.value, Elements.movieYear.value, Elements.movieGenres.value.split(','), Elements.movieCover.value);
         let index = Model.addMovie(newMovie);
         View.renderNewMovie(newMovie, index);
         bindEvent(Elements.movieCardContainer[index], function() {

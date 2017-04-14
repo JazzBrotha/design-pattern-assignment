@@ -1,4 +1,4 @@
-# moive-db
+# Moive DB
 Small movie database that allows user to filter movies based on genre or year as well as edit and add movies.
 
 This project is live on: https://jazzbrotha.github.io/movie-db/
@@ -18,10 +18,17 @@ Note: No current mobile or tablet support
 * Force new genres to begin with uppercase
 
 ## Browser Support
-Tested in Firefox and Chrome. Other browsers must support `localStorage`.
+* Chrome 49+
+* Firefox 51+
+* Safari 10+
+* Microsoft Edge 14+
+* Opera 43+
+* Internet Explorer 11+
+
+Other browsers must support `localStorage`.
 
 ## License
 MIT License
 
 
-OBS! Plots and actors not displaying correctly. Rating bar is bugged when adding new movie. Year search is bugged.
+OBS! Plots and actors not displaying correctly. Rating bar is bugged when adding new movie.
