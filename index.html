@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Movie DB</title>
+    <link rel="stylesheet" type="text/css" href="css/circle.min.css">
+    <link rel="stylesheet" type="text/css" href="css/spectre.min.css">
+    <link rel="stylesheet" type="text/css" href="css/spectre-exp.min.css">
+    <link rel="stylesheet" type="text/css" href="css/main.min.css">
+</head>
+
+<body>
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger"><span class="menu-text">MENU</span></label>
+    <ul class="menu navigation">
+        <!-- menu header -->
+        <li class="menu-header">
+            <span class="menu-header-text">
+        GENRES
+      </span>
+        </li>
+        <!-- menu item -->
+        <li class="menu-item">
+            <!-- <div class="menu-badge">
+        <label class="label label-primary">2</label>
+      </div> -->
+            <a href="#" class="genre-link-name">
+       Action
+      </a>
+        </li>
+        <li class="menu-item">
+            <!-- <div class="menu-badge">
+        <label class="label label-primary genre-label-count">2</label>
+      </div> -->
+            <a href="#" class="genre-link-name">
+       Adventure
+      </a>
+        </li>
+        <li class="menu-item">
+            <!-- <div class="menu-badge">
+        <label class="label label-primary genre-label-count">2</label>
+      </div> -->
+            <a href="#" class="genre-link-name">
+       Animation
+      </a>
+        </li>
+        <li class="menu-item">
+            <!-- <div class="menu-badge">
+        <label class="label label-primary genre-label-count">2</label>
+      </div> -->
+            <a href="#" class="genre-link-name">
+       Biography
+      </a>
+        </li>
+        <li class="menu-item">
+            <!-- <div class="menu-badge">
+        <label class="label label-primary">2</label>
+      </div> -->
+            <a href="#" class="genre-link-name">
+       Comedy
+      </a>
+        </li>
+        <li class="menu-item">
+            <!-- <div class="menu-badge">
+        <label class="label label-primary">2</label>
+      </div> -->
+            <a href="#" class="genre-link-name">
+       Crime
+      </a>
+        </li>
+        <li class="menu-item">
+            <!-- <div class="menu-badge">
+        <label class="label label-primary">2</label>
+      </div> -->
+            <a href="#" class="genre-link-name">
+       Drama
+      </a>
+        </li>
+        <li class="menu-item">
+            <!-- <div class="menu-badge">
+        <label class="label label-primary">2</label>
+      </div> -->
+            <a href="#" class="genre-link-name">
+       Family
+      </a>
+        </li>
+        <li class="menu-item">
+            <!-- <div class="menu-badge">
+        <label class="label label-primary">2</label>
+      </div> -->
+            <a href="#" class="genre-link-name">
+       Fantasy
+      </a>
+        </li>
+        <li class="menu-item">
+            <!-- <div class="menu-badge">
+        <label class="label label-primary">2</label>
+      </div> -->
+            <a href="#" class="genre-link-name">
+       History
+      </a>
+        </li>
+        <li class="menu-item">
+            <!-- <div class="menu-badge">
+        <label class="label label-primary">2</label>
+      </div> -->
+            <a href="#" class="genre-link-name">
+       Horror
+      </a>
+        </li>
+        <li class="menu-item">
+            <!-- <div class="menu-badge">
+        <label class="label label-primary">2</label>
+      </div> -->
+            <a href="#" class="genre-link-name">
+       Romance
+      </a>
+        </li>
+        <li class="menu-item">
+            <!-- <div class="menu-badge">
+        <label class="label label-primary">2</label>
+      </div> -->
+            <a href="#" class="genre-link-name">
+       Sci-Fi
+      </a>
+        </li>
+        <li class="menu-item">
+            <!-- <div class="menu-badge">
+        <label class="label label-primary">2</label>
+      </div> -->
+            <a href="#" class="genre-link-name">
+       Thriller
+      </a>
+        </li>
+        <li class="menu-item">
+            <!-- <div class="menu-badge">
+        <label class="label label-primary">2</label>
+      </div> -->
+            <a href="#" class="genre-link-name">
+       Western
+      </a>
+        </li>
+        <!-- menu divider -->
+        <li class="divider"></li>
+        <li class="menu-header">
+            <span class="menu-header-text">
+        FILTER
+      </span>
+        </li>
+        <li class="menu-item">
+
+            <a href="#" id="top-rated-link">
+         Top Rated
+      </a>
+        </li>
+        <li class="menu-item">
+
+            <a href="#" id="worst-rated-link">
+       Worst Rated
+      </a>
+        </li>
+        <li class="menu-item">
+
+            <a href="#" id="year-sort">
+         By Year
+      </a>
+            <input class="form-input hide" id="movie-year-input" placeholder="Enter year" type="text">
+        </li>
+        <li class="menu-item">
+
+            <a href="#" id="all-movies-link">
+         All
+      </a>
+        </li>
+        <!-- menu divider -->
+        <li class="divider"></li>
+        <li class="menu-header">
+            <span class="menu-header-text">
+        SEARCH
+      </span>
+        </li>
+        <li class="menu-item">
+            <input disabled class="form-input" placeholder="Search movie title..." type="text">
+        </li>
+        <div class="flex-center mt-5">
+            <button class="btn btn-primary btn-xl tooltip circle" data-tooltip="Add Movie" data-tooltip-pos="top" id="new-movie-button">+</button>
+        </div>
+    </ul>
+
+
+    <div class="site-wrap" id="main-wrapper">
+        <div class="columns" id="card-container">
+
+        </div>
+
+    </div>
+
+
+    <div class="modal" id="new-movie-modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-container modal-lg">
+            <div class="modal-header">
+                <button class="btn btn-clear float-right modal-close-button"></button>
+                <div class="modal-title">Add Movie</div>
+            </div>
+            <div class="modal-body">
+                <div class="content">
+                    <form class="form-horizontal" name="movieCreator" id="movieCreator">
+                        <div class="form-group">
+                            <div class="col-3">
+                                <label class="form-label" for="title">Title</label>
+                            </div>
+                            <div class="col-9">
+                                <input class="form-input" required type="text" name="title" placeholder="Title" title="Please Enter A Title" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-3">
+                                <label class="form-label" for="year">Year</label>
+                            </div>
+                            <div class="col-9">
+                                <input class="form-input" required type="text" name="year" placeholder="Year" pattern="[\d]{4}" title="Release year may only contain 4 digits" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-3">
+                                <label class="form-label" for="genres">Genre</label>
+                            </div>
+                            <div class="col-9">
+                                <input class="form-input" required type="text" name="genres" placeholder="Genre" pattern="[A-Za-z,-]+" title="Genres may only contain letters and can't include any blank space" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-3">
+                                <label class="form-label" for="cover">Cover</label>
+                            </div>
+                            <div class="col-9">
+                                <input class="form-input" type="url" name="cover" placeholder="Url" title="Please enter a valid URL" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="p-2">
+              <div class="toast toast-success hide" id="success-message">
+                New movie sucessfully added. Check the bottom of the document.
+              </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="submit" form="movieCreator">Add</button>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal" id="edit-modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-container" role="document">
+            <div class="modal-header">
+                <a href="#modals" class="btn btn-clear float-right modal-close-button" aria-label="Close"></a>
+            </div>
+            <div class="modal-body">
+                <div class="content">
+                    <h4>Rate Movie</h4>
+                    <div class="columns">
+                        <div class="column col-6">
+                            <div class="c100" id="new-rating-circle">
+                                <span id="new-rating-span"></span>
+                                <div class="slice">
+                                    <div class="bar"></div>
+                                    <div class="fill"></div>
+                                </div>
+                            </div>
+                            <input class="slider" type="range" min="1" max="10" value="0" id="rating-slider" />
+                        </div>
+                    </div>
+                    <h4>Set Genres</h4>
+                    <div id="genre-container">
+                        <label class="chip genre-edit-chip">Action</label>
+                        <label class="chip genre-edit-chip">Adventure</label>
+                        <label class="chip genre-edit-chip">Animation</label>
+                        <label class="chip genre-edit-chip">Biography</label>
+                        <label class="chip genre-edit-chip">Comedy</label>
+                        <label class="chip genre-edit-chip">Crime</label>
+                        <label class="chip genre-edit-chip">Drama</label>
+                        <label class="chip genre-edit-chip">Family</label>
+                        <label class="chip genre-edit-chip">Fantasy</label>
+                        <label class="chip genre-edit-chip">History</label>
+                        <label class="chip genre-edit-chip">Horror</label>
+                        <label class="chip genre-edit-chip">Romance</label>
+                        <label class="chip genre-edit-chip">Sci-Fi</label>
+                        <label class="chip genre-edit-chip">Thriller</label>
+                        <label class="chip genre-edit-chip">Western</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="submit-edit-button">Edit</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- </div>
+                 <div class="container"></div>
+                 <div class="modal-body">
+
+                  <div class="alert alert-success invisible" role="alert" id="genre-success">
+                    Movie genre updated.
+                </div>
+                 </div>
+                 <div class="modal-footer">
+                   <a href="#" data-dismiss="modal" class="btn">Close</a>
+
+                 </div>
+             </div>
+         </div>
+     </div> -->
+
+
+
+
+
+    </section>
+
+
+    <div id="movie-preview" class="sidenav">
+        <a id="close-movie-button" class="closebtn">&times;</a>
+          <img class="img-responsive movie-cover-full" id="modal-movie-poster" alt="">
+        <div class="text-center movie-info">
+            <h4 class="movie-header" id="modal-movie-title"></h4>
+            <h4 class="movie-year" id="modal-movie-year"></h4>
+        </div>
+        <div id="rating-circle">
+            <span id="modal-movie-rating"></span>
+            <div class="slice">
+                <div class="bar"></div>
+                <div class="fill"></div>
+            </div>
+        </div>
+        <div class="flex-center" id="modal-movie-genres"></div>
+        <div class="p-2">
+          <button class="btn btn-primary btn-block" id="edit-button">Edit</button>
+        </div>
+                <div class="panel panel-borderless">
+                <div class="panel-header">
+                  <div class="panel-title">Plot</div>
+                </div>
+                <div class="panel-body">
+                  <div class="tile">
+                    <div class="tile-content">
+                      <p class="tile-subtitle" id="modal-movie-plot"></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+                <div class="panel panel-borderless">
+                <div class="panel-header">
+                  <div class="panel-title">Cast</div>
+                </div>
+                <div class="panel-body">
+                  <div class="tile">
+                    <div class="tile-content" id="modal-movie-cast">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+    </div>
+
+    <script src="js/bundle.min.js"></script>
+    </script>
+</body>
+
+</html>
