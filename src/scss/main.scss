@@ -1,8 +1,46 @@
+html, body {
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
 .btn-empty {
   background-color: transparent;
   border: none;
   margin: 0;
   padding: 0;
+}
+
+.navigation {
+  width: 300px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  box-shadow: none;
+  display: none;
+}
+
+.site-wrap {
+  min-width: 100%;
+  min-height: 100%;
+  position: relative;
+  top: 0;
+  bottom: 100%;
+  left: 20px;
+  z-index: 1;
+  padding: 4em;
+}
+
+.nav-trigger {
+  position: absolute;
+  clip: rect(0, 0, 0, 0);
 }
 
 input[type="checkbox"] {
@@ -18,70 +56,11 @@ input[type="checkbox"]:checked + label {
     transform: rotateX(180deg);
   }
 
-  body {
-  	margin: 0;
-  	padding: 0;
-  	border: 0;
-  }
-
-  .center {
-  	text-align: center;
-  }
-
-  .is-hidden {
-  	display: none;
-  }
-
-.avatar-rectangle img {
-  border-radius: 0;
-}
-
-
-/* Navigation Menu - Background */
-.navigation {
-  /* critical sizing and position styles */
-  width: 300px;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  box-shadow: none;
-  display: none;
-}
-
-
-/* Site Wrapper - Everything that isn't navigation */
-.site-wrap {
-  /* Critical position and size styles */
-  min-width: 100%;
-  min-height: 100%;
-  position: relative;
-  top: 0;
-  bottom: 100%;
-  left: 20px;
-  z-index: 1;
-
-  /* non-critical apperance styles */
-  padding: 4em;
-}
-
-/* Nav Trigger */
-.nav-trigger {
-  /* critical styles - hide the checkbox input */
-  position: absolute;
-  clip: rect(0, 0, 0, 0);
-}
-
 label[for="nav-trigger"] {
-  /* critical positioning styles */
   position: fixed;
   left: 25px;
   top: 15px;
   z-index: 2;
-
-  /* non-critical apperance styles */
   height: 30px;
   width: 30px;
   cursor: pointer;
@@ -115,17 +94,6 @@ label[for="nav-trigger"] {
   box-shadow: 0 0.1rem 0.4rem rgba(0,0,0,.3);
 }
 
-
-html, body {
-	/* Without this, the body has excess horizontal scroll when the menu is open */
-  overflow-x: hidden;
-
-
-}
-
-
-// Movie view menu
-
 .sidenav {
     height: 100%;
     width: 0;
@@ -138,10 +106,6 @@ html, body {
     background-color: white;
 }
 
-.p-2 {
-    padding: 2rem;
-}
-
 .sidenav .closebtn {
     position: absolute;
     top: 0;
@@ -152,7 +116,6 @@ html, body {
     color: #999;
     text-decoration: none;
 }
-
 
 .btn-xl {
   height: 8rem;
@@ -167,9 +130,8 @@ html, body {
   justify-content: center;
 }
 
-
-.mt-10 {
-  margin-top: 10rem;
+.mt-5 {
+  margin-top: 5rem;
 }
 
 .modal-lg {
@@ -186,10 +148,6 @@ html, body {
 
 .panel-borderless {
   border: none;
-}
-
-.mt-3 {
-  margin-top: 3rem;
 }
 
 .genre-edit-chip {
@@ -242,7 +200,7 @@ font-size: 1.3rem
 }
 
 .bar-item {
-  background-color: #818BD5
+  background-color: #818BD5;
 }
 
 .tile.tile-centered.tile-meta.tile-meta-wrap {
