@@ -30,12 +30,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JazzBrotha/design-pattern-assignment.git"
+    "url": "git+https://github.com/JazzBrotha/movie-db.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/JazzBrotha/design-pattern-assignment/issues"
+    "url": "https://github.com/JazzBrotha/movie-db/issues"
   },
-  "homepage": "https://github.com/JazzBrotha/design-pattern-assignment#readme"
+  "homepage": "https://github.com/JazzBrotha/movie-db#readme"
 }

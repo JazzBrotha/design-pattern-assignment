@@ -15,7 +15,7 @@ export default {
         Elements.cardContainer.innerHTML = '';
         for (let movie of movieArr) {
             Elements.cardContainer.innerHTML +=
-                `<div class="column col-2 movie-card-container">
+                `<div class="column col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 col-xxl-2 movie-card-container">
        <div class="card">
           <div class="card-image">
             <img class="img-responsive card-movie-cover">
@@ -204,7 +204,7 @@ export default {
     // Renders HTML for new movie
     renderNewMovie(newMovie, i) {
         const movieCard = document.createElement('div');
-        movieCard.setAttribute('class', 'column col-2 movie-card-container');
+        movieCard.setAttribute('class', 'column col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 col-xxl-2 movie-card-container');
         movieCard.innerHTML = `<div class="card">
           <div class="card-image">
             <img class="img-responsive card-movie-cover">

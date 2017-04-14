@@ -35,7 +35,7 @@ module.exports = {
     movieModal : document.getElementById('movie-modal'),
     modalMovieCast : document.getElementById('modal-movie-cast'),
     modalMoviePlot : document.getElementById('modal-movie-plot'),
-    moviePreview : document.getElementById('mySidenav'),
+    moviePreview : document.getElementById('movie-preview'),
     movieResult: document.getElementById('movie-result'),
     movieTitle : document.forms.movieCreator.title,
     movieYear : document.forms.movieCreator.year,
