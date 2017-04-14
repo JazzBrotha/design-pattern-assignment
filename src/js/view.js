@@ -102,10 +102,9 @@ export default {
     },
 
     // Display new movie genres and rating after editing
-    changeMovieHTML(index) {
+    changeMovieHTML(title) {
         let movieGenres = Array.from(Elements.modalGenres.childNodes);
         let genreChips = Array.from(Elements.genreEditChip);
-        let movieArr = parseMovies();
         Elements.editModal.classList.remove('active');
 
         // Update genre for both card and sidebar view
@@ -117,16 +116,21 @@ export default {
         });
 
         for (let i = 0; i < Elements.cardMovieTitle.length; i++) {
-            if (Elements.cardMovieTitle[i].innerHTML === Elements.modalTitle.innerHTML) {
-                Elements.cardMovieGenre[i].innerHTML = Elements.modalGenres.innerHTML;
+            if (Elements.cardMovieTitle[i].innerHTML === title) {
+                  let movieIndex = getMovieIndex(Elements.cardMovieTitle[i].innerHTML);
+                  let movies = parseMovies();
+
+                  Elements.cardMovieGenre[i].innerHTML = Elements.modalGenres.innerHTML;
+
+                  // Update rating for both card and sidebar view
+                  Elements.cardMovieRating[i].style.width = `${getAverage(movies[movieIndex].ratings)* 10}%`;
+                  Elements.cardMovieRating[i].innerHTML = `${getAverage(movies[movieIndex].ratings)}`;
+                  Elements.modalRating.innerHTML = Elements.cardMovieRating[i].innerHTML;
+                  Elements.ratingCirle.className = `c100 p${parseInt(Elements.modalRating.innerHTML) * 10} centered`;
             }
         }
 
-        // Update rating for both card and sidebar view
-        Elements.cardMovieRating[index].style.width = `${getAverage(movieArr[index].ratings)* 10}%`;
-        Elements.cardMovieRating[index].innerHTML = `${getAverage(movieArr[index].ratings)}`;
-        Elements.modalRating.innerHTML = Elements.cardMovieRating[index].innerHTML;
-        Elements.ratingCirle.className = `c100 p${parseInt(Elements.modalRating.innerHTML) * 10} centered`;
+
     },
 
     // Close current active modal
@@ -223,6 +227,8 @@ export default {
         Elements.cardMovieCover[i].src = newMovie.posterurl || 'dist/pics/movie-placeholder.svg';
         Elements.cardMovieTitle[i].innerHTML = newMovie.title;
         Elements.cardMovieYear[i].innerHTML = newMovie.year;
+        Elements.cardMovieRating[i].style.width = `${getAverage(newMovie.ratings)* 10}%`;
+        Elements.cardMovieRating[i].innerHTML = `${getAverage(newMovie.ratings)}`;
         for (let genre of newMovie.genres) {
             Elements.cardMovieGenre[i].innerHTML += `<label class="chip">${genre}</label>`;
         }

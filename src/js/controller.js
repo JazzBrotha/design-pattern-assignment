@@ -108,8 +108,7 @@ export default function() {
         }
 
         Model.editMovie(genres, rating, title);
-        let movieIndex = getMovieIndex(title);
-        View.changeMovieHTML(movieIndex);
+        View.changeMovieHTML(title);
     });
 
 }
