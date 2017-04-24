@@ -13,7 +13,7 @@ export default {
 
     createMovieList(movieArr) {
         Elements.cardContainer.innerHTML = '';
-        for (let movie of movieArr) {
+        for (const movie of movieArr) {
             Elements.cardContainer.innerHTML +=
                 `<div class="column col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 col-xxl-2 movie-card-container">
        <div class="card">
@@ -46,7 +46,7 @@ export default {
             Elements.cardMovieYear[i].innerHTML = movieArr[i].year;
             Elements.cardMovieRating[i].style.width = `${getAverage(movieArr[i].ratings)* 10}%`;
             Elements.cardMovieRating[i].innerHTML = `${getAverage(movieArr[i].ratings)}`;
-            for (let genre of movieArr[i].genres) {
+            for (const genre of movieArr[i].genres) {
                 Elements.cardMovieGenre[i].innerHTML += `<label class="chip genre-chip">${genre}</label>`;
             }
         }
@@ -54,8 +54,8 @@ export default {
 
     // Opens sidebar for selected movie
     openMovieView(cardIndex) {
-        let movieIndex = getMovieIndex(Elements.cardMovieTitle[cardIndex].innerHTML);
-        let movies = parseMovies();
+        const movieIndex = getMovieIndex(Elements.cardMovieTitle[cardIndex].innerHTML);
+        const movies = parseMovies();
         Elements.moviePreview.style.width = "450px";
         Elements.modalTitle.innerHTML = Elements.cardMovieTitle[cardIndex].innerHTML;
         Elements.modalYear.innerHTML = Elements.cardMovieYear[cardIndex].innerHTML;
@@ -79,8 +79,8 @@ export default {
 
     // Displays edit modal for current movie
     editMovieModal() {
-        let movieGenres = Array.from(Elements.modalGenres.childNodes);
-        let genreChips = Array.from(Elements.genreEditChip);
+        const movieGenres = Array.from(Elements.modalGenres.childNodes);
+        const genreChips = Array.from(Elements.genreEditChip);
         Elements.editModal.classList.add('active');
         Elements.newRatingSpan.innerHTML = Elements.modalRating.innerHTML;
         Elements.newRatingCircle.classList = Elements.ratingCirle.classList;
@@ -103,8 +103,8 @@ export default {
 
     // Display new movie genres and rating after editing
     changeMovieHTML(title) {
-        let movieGenres = Array.from(Elements.modalGenres.childNodes);
-        let genreChips = Array.from(Elements.genreEditChip);
+        const movieGenres = Array.from(Elements.modalGenres.childNodes);
+        const genreChips = Array.from(Elements.genreEditChip);
         Elements.editModal.classList.remove('active');
 
         // Update genre for both card and sidebar view
@@ -117,8 +117,8 @@ export default {
 
         for (let i = 0; i < Elements.cardMovieTitle.length; i++) {
             if (Elements.cardMovieTitle[i].innerHTML === title) {
-                  let movieIndex = getMovieIndex(Elements.cardMovieTitle[i].innerHTML);
-                  let movies = parseMovies();
+                  const movieIndex = getMovieIndex(Elements.cardMovieTitle[i].innerHTML);
+                  const movies = parseMovies();
 
                   Elements.cardMovieGenre[i].innerHTML = Elements.modalGenres.innerHTML;
 
@@ -140,7 +140,7 @@ export default {
 
     // Display function for top rated and worst rated
     displayMovie(movie) {
-        let titleCardArr = Array.from(Elements.cardMovieTitle);
+        const titleCardArr = Array.from(Elements.cardMovieTitle);
         titleCardArr.filter((title, i) =>
             movie.title === title.innerHTML || movie.originalTitle === title.innerHTML ?
             Elements.movieCardContainer[i].style.display = "block" :
@@ -149,8 +149,8 @@ export default {
     },
     // Display function used to display by genre or year
     displayMovies(arr) {
-        let titleCardArr = Array.from(Elements.cardMovieTitle);
-        let movieTitleArr = arr.map(movie =>
+        const titleCardArr = Array.from(Elements.cardMovieTitle);
+        const movieTitleArr = arr.map(movie =>
           movie.originalTitle.length > 1 ? movie.originalTitle : movie.title
         );
         titleCardArr.filter((title, i) =>
@@ -196,7 +196,7 @@ export default {
 
     // Display all movie cards
     displayAllMovies() {
-        let movieCardArr = Array.from(Elements.movieCardContainer);
+        const movieCardArr = Array.from(Elements.movieCardContainer);
         return movieCardArr.forEach(card =>
             card.style.display = "block"
         );
@@ -229,7 +229,7 @@ export default {
         Elements.cardMovieYear[i].innerHTML = newMovie.year;
         Elements.cardMovieRating[i].style.width = `${getAverage(newMovie.ratings)* 10}%`;
         Elements.cardMovieRating[i].innerHTML = `${getAverage(newMovie.ratings)}`;
-        for (let genre of newMovie.genres) {
+        for (const genre of newMovie.genres) {
             Elements.cardMovieGenre[i].innerHTML += `<label class="chip">${genre}</label>`;
         }
     },

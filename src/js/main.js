@@ -17,7 +17,7 @@ else {
     alert("Sorry! No Web Storage support available. Please consider switching to another browser.");
 }
 
-let movieArr = parseMovies();
+const movieArr = parseMovies();
 View.createMovieList(movieArr);
 Controller();
 blockWhiteSpace();

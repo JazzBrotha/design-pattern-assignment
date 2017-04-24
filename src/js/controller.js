@@ -12,7 +12,7 @@ import {
 export default function() {
 
     // Binds close button on every modal to close the respective modal
-    let modalCloseButtonArr = Array.from(Elements.modalCloseButton);
+    const modalCloseButtonArr = Array.from(Elements.modalCloseButton);
     modalCloseButtonArr.forEach((button, i) => {
         bindEvent(button, function() {
             View.closeActiveModal(i);
@@ -25,8 +25,8 @@ export default function() {
     // Handling of new movie
     bindEvent(Elements.movieCreator, function(e) {
         e.preventDefault();
-        let newMovie = new Movie(Elements.movieTitle.value, Elements.movieYear.value, Elements.movieGenres.value.split(','), Elements.movieCover.value);
-        let index = Model.addMovie(newMovie);
+        const newMovie = new Movie(Elements.movieTitle.value, Elements.movieYear.value, Elements.movieGenres.value.split(','), Elements.movieCover.value);
+        const index = Model.addMovie(newMovie);
         View.renderNewMovie(newMovie, index);
         bindEvent(Elements.movieCardContainer[index], function() {
             View.openMovieView(index);
@@ -37,13 +37,13 @@ export default function() {
 
     // Binding top rated
     bindEvent(Elements.topRatedLink, function() {
-        let movie = Model.getTopRatedMovie();
+        const movie = Model.getTopRatedMovie();
         View.displayMovie(movie);
     });
 
     // Bind worst rated
     bindEvent(Elements.worstRatedLink, function() {
-        let movie = Model.getWorstRatedMovie();
+        const movie = Model.getWorstRatedMovie();
         View.displayMovie(movie);
     });
 
@@ -51,11 +51,11 @@ export default function() {
     bindEvent(Elements.allMoviesLink, View.displayAllMovies);
 
     // Create click functions for all menu genre links
-    let genreLinkArr = Array.from(Elements.genreLinkName);
+    const genreLinkArr = Array.from(Elements.genreLinkName);
     genreLinkArr.forEach(link => {
         bindEvent(link, function() {
-            let genre = this.innerHTML.trim();
-            let movieArr = Model.getMoviesByGenre(genre);
+            const genre = this.innerHTML.trim();
+            const movieArr = Model.getMoviesByGenre(genre);
             View.displayMovies(movieArr);
         });
     });
@@ -63,8 +63,8 @@ export default function() {
     // Creating click function for year filter on menu
     bindEvent(Elements.yearSort, View.displayYearInput);
     bindEvent(Elements.movieYearInput, function() {
-        let year = this.value;
-        let movieArr = Model.getMoviesThisYear(year);
+        const year = this.value;
+        const movieArr = Model.getMoviesThisYear(year);
         View.displayMovies(movieArr);
     }, 'keyup');
 
@@ -72,7 +72,7 @@ export default function() {
     bindEvent(Elements.closeMovieButton, View.closeMovieView);
 
     // Click function to open movie sidebar view for all current movies in db
-    let movieCardArr = Array.from(Elements.movieCardContainer);
+    const movieCardArr = Array.from(Elements.movieCardContainer);
     movieCardArr.forEach((card, index) => {
         bindEvent(card, function() {
             View.openMovieView(index);
@@ -86,7 +86,7 @@ export default function() {
     bindEvent(Elements.ratingSlider, View.displayRating, 'input');
 
     // Preview active genres when editing movie
-    let genreChips = Array.from(Elements.genreEditChip);
+    const genreChips = Array.from(Elements.genreEditChip);
     genreChips.forEach(chip => {
         bindEvent(chip, function() {
             View.previewGenres(this);
@@ -97,8 +97,8 @@ export default function() {
     bindEvent(Elements.submitEditButton, function() {
         let genres = [];
         let rating;
-        let title = Elements.modalTitle.innerHTML;
-        for (let activeGenres of Elements.genreEditChip) {
+        const title = Elements.modalTitle.innerHTML;
+        for (const activeGenres of Elements.genreEditChip) {
             if (activeGenres.classList.contains('active')) {
                 genres.push(activeGenres.innerHTML.trim());
             }

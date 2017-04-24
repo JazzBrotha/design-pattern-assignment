@@ -31,7 +31,7 @@ export function bindEvent(target, callback, type = 'click', capture = false) {
 
 export function parseMovies() {
     let movieArr = [];
-    for (let key in localStorage) {
+    for (const key in localStorage) {
 
         // Prevents other values in Firefox to be pushed
         if (typeof localStorage[key] === 'string')
@@ -41,17 +41,17 @@ export function parseMovies() {
 }
 
 export function getMovieIndex(title) {
-    let movieArr = parseMovies();
-    let movie = movieArr.reduce((p, c) =>
+    const movieArr = parseMovies();
+    const movie = movieArr.reduce((p, c) =>
       p.title === title || p.originalTitle === title ? p : c
     );
-    let movieIndex = movieArr.indexOf(movie);
+    const movieIndex = movieArr.indexOf(movie);
     return movieIndex;
 }
 
 //Prevents blank space as first character in all input fields
 export function blockWhiteSpace() {
-    for (let input of Elements.inputs) {
+    for (const input of Elements.inputs) {
         bindEvent(input, function(e) {
             if (e.which === SPACE_BAR && e.target.selectionStart === 0) {
                 e.preventDefault();

@@ -15,15 +15,15 @@ export default {
     },
 
     addMovie(movie) {
-        let index = localStorage.length;
+        const index = localStorage.length;
         localStorage.setItem(index, JSON.stringify(movie));
         return index;
     },
 
     editMovie(genres, rating, title) {
-        for (let key in localStorage) {
+        for (const key in localStorage) {
             if (typeof localStorage[key] === 'string') {
-                let movie = JSON.parse(localStorage[key]);
+                const movie = JSON.parse(localStorage[key]);
                 if (movie.title === title || movie.originalTitle === title) {
                     movie.genres = genres;
                     if (rating !== undefined) {
@@ -36,9 +36,9 @@ export default {
     },
 
     getTopRatedMovie() {
-        let movieArr = parseMovies();
-        let multipleRatings = movieArr.filter(movie => movie.ratings.length > 1);
-        let topRated = multipleRatings.reduce(
+        const movieArr = parseMovies();
+        const multipleRatings = movieArr.filter(movie => movie.ratings.length > 1);
+        const topRated = multipleRatings.reduce(
             (prevVal, currVal) =>
             getAverage(prevVal.ratings) > getAverage(currVal.ratings) ?
             prevVal :
@@ -48,9 +48,9 @@ export default {
     },
 
     getWorstRatedMovie() {
-        let movieArr = parseMovies();
-        let multipleRatings = movieArr.filter(movie => movie.ratings.length > 1);
-        let worstRated = multipleRatings.reduce(
+        const movieArr = parseMovies();
+        const multipleRatings = movieArr.filter(movie => movie.ratings.length > 1);
+        const worstRated = multipleRatings.reduce(
             (prevVal, currVal) =>
             getAverage(prevVal.ratings) < getAverage(currVal.ratings) ?
             prevVal :
@@ -60,7 +60,7 @@ export default {
     },
 
     getMoviesThisYear(movieYear) {
-        let movieArr = parseMovies();
+        const movieArr = parseMovies();
         return movieArr.filter(
             (movie, index) =>
             movie.year === movieYear
@@ -68,8 +68,8 @@ export default {
     },
 
     getMoviesByGenre(movieGenre) {
-        let movieArr = parseMovies();
-        let genreArr = movieArr.filter(
+        const movieArr = parseMovies();
+        const genreArr = movieArr.filter(
             (movie, index) =>
             movie.genres.includes(movieGenre)
         );
